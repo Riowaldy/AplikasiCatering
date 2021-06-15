@@ -1,14 +1,17 @@
-var menu = function () {
-    var getDataMenu = function(){
-        var t = $('#menu').DataTable({
+var pesanan = function () {
+    var getDataPesanan = function(){
+        var t = $('#pesanan').DataTable({
             'ajax': {
-                'url': '../../controller/readMenu.php',
+                'url': '../../controller/readPesanan.php',
                 'dataSrc': ''
             },
             'columns': [
                 { 'data': 'id'},
-                { 'data': 'nama'},
+                { 'data': 'pesanan'},
+                { 'data': 'pelanggan'},
+                { 'data': 'jumlah'},
                 { 'data': 'harga'},
+                { 'data': 'tanggal'},
                 {
                     'render': function (data, type, full, meta) {
                         var html = '';
@@ -20,11 +23,18 @@ var menu = function () {
                         html += '</div>';
                         return html;
                     }
-                }
+                },
+                { 'data': 'menuid'},
+                { 'data': 'userid'},
             ],
             "order": [],
             "columnDefs": [
-                { "orderable": false, "targets": [0, 3] }
+                {
+                    "targets": [7,8],
+                    "visible": false,
+                    "searchable": false
+                },
+                { "orderable": false, "targets": [0,6] }
             ]
         });
         t.on( 'order.dt search.dt', function () {
@@ -36,24 +46,78 @@ var menu = function () {
 
     var resetData = function(){
         $('#btn-reset-edit').click(function(){
-            $("#nama_menu_error").html("");
-            $("#nama_menu_tambah_error").html("");
-            $('#nama_menu_tambah').val("");
-            $('#nama_menu').val("");
-            $("#harga_menu_error").html("");
-            $("#harga_menu_tambah_error").html("");
-            $('#harga_menu_tambah').val("");
-            $('#harga_menu').val("");
+            $("#pesanan_pesanan_error").html("");
+            $("#pesanan_pesanan_tambah_error").html("");
+            $('#pesanan_pesanan_tambah').val("0");
+            $('#pesanan_pesanan').val("");
+            $("#pelanggan_pesanan_error").html("");
+            $("#pelanggan_pesanan_tambah_error").html("");
+            $('#pelanggan_pesanan_tambah').val("0");
+            $('#pelanggan_pesanan').val("");
+            $("#jumlah_pesanan_error").html("");
+            $("#jumlah_pesanan_tambah_error").html("");
+            $('#jumlah_pesanan_tambah').val("");
+            $('#jumlah_pesanan').val("");
+            $("#tanggal_pesanan_error").html("");
+            $("#tanggal_pesanan_tambah_error").html("");
+            $('#tanggal_pesanan_tambah').val("");
+            $('#tanggal_pesanan').val("");
         });
         $('#btn-reset-tambah').click(function(){
-            $("#nama_menu_error").html("");
-            $("#nama_menu_tambah_error").html("");
-            $('#nama_menu_tambah').val("");
-            $('#nama_menu').val("");
-            $("#harga_menu_error").html("");
-            $("#harga_menu_tambah_error").html("");
-            $('#harga_menu_tambah').val("");
-            $('#harga_menu').val("");
+            $("#pesanan_pesanan_error").html("");
+            $("#pesanan_pesanan_tambah_error").html("");
+            $('#pesanan_pesanan_tambah').val("0");
+            $('#pesanan_pesanan').val("");
+            $("#pelanggan_pesanan_error").html("");
+            $("#pelanggan_pesanan_tambah_error").html("");
+            $('#pelanggan_pesanan_tambah').val("0");
+            $('#pelanggan_pesanan').val("");
+            $("#jumlah_pesanan_error").html("");
+            $("#jumlah_pesanan_tambah_error").html("");
+            $('#jumlah_pesanan_tambah').val("");
+            $('#jumlah_pesanan').val("");
+            $("#tanggal_pesanan_error").html("");
+            $("#tanggal_pesanan_tambah_error").html("");
+            $('#tanggal_pesanan_tambah').val("");
+            $('#tanggal_pesanan').val("");
+        });
+    }
+
+    var dropdownPesanan = function(){
+        var req = $.ajax({
+            url: '../../controller/dropPesanan.php',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            timeout: 30000,
+        });
+        req.done(function (data) {
+            var x = "";
+            x += '<option value="0">Pilih Pesanan</option>';
+            data.forEach(res => {
+                x += '<option value="' + res.id + '">' + res.nama + '</option>';
+            });
+            $('#pesanan_pesanan_tambah').append(x);
+            $('#pesanan_pesanan').append(x);
+        });
+    }
+
+    var dropdownPelanggan = function(){
+        var req = $.ajax({
+            url: '../../controller/dropPelanggan.php',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            timeout: 30000,
+        });
+        req.done(function (data) {
+            var x = "";
+            x += '<option value="0">Pilih Pelanggan</option>';
+            data.forEach(res => {
+                x += '<option value="' + res.id + '">' + res.nama + '</option>';
+            });
+            $('#pelanggan_pesanan_tambah').append(x);
+            $('#pelanggan_pesanan').append(x);
         });
     }
 
@@ -61,7 +125,7 @@ var menu = function () {
         $('#btn-simpan-tambah').click(function(){
             swal({
                 title: 'Apakah Anda Yakin?',
-                text: 'Menyimpan Data Menu Ini',
+                text: 'Menyimpan Data Pesanan Ini',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#2196F3',
@@ -76,25 +140,33 @@ var menu = function () {
                 window.onfocus = null;
                 if (isConfirm) {
                     var addData = {
-                        nama: $('#nama_menu_tambah').val(),
-                        harga: $('#harga_menu_tambah').val(),
+                        pesanan: $('#pesanan_pesanan_tambah').val(),
+                        pelanggan: $('#pelanggan_pesanan_tambah').val(),
+                        jumlah: $('#jumlah_pesanan_tambah').val(),
+                        tanggal: $('#tanggal_pesanan_tambah').val(),
                     };
-                    if(addData.nama == ""){
-                        $("#nama_menu_tambah_error").html("<strong>Data Nama Kosong</strong>");
-                    }else if(addData.harga == ""){
-                        $("#harga_menu_tambah_error").html("<strong>Data Harga Kosong</strong>");
+                    if(addData.pesanan == "" || addData.pesanan == "0"){
+                        $("#pesanan_pesanan_tambah_error").html("<strong>Data Pesanan Kosong</strong>");
+                    }else if(addData.pelanggan == ""){
+                        $("#pelanggan_pesanan_tambah_error").html("<strong>Data Pelanggan Kosong</strong>");
+                    }else if(addData.jumlah == ""){
+                        $("#jumlah_pesanan_tambah_error").html("<strong>Data Jumlah Kosong</strong>");
+                    }else if(addData.tanggal == ""){
+                        $("#tanggal_pesanan_tambah_error").html("<strong>Data Tanggal Kosong</strong>");
                     }
                     else{
-                        $("#nama_menu_tambah_error").html("");
-                        $("#harga_menu_tambah_error").html("");
+                        $("#pesanan_pesanan_tambah_error").html("");
+                        $("#pelanggan_pesanan_tambah_error").html("");
+                        $("#jumlah_pesanan_tambah_error").html("");
+                        $("#tanggal_pesanan_tambah_error").html("");
                         $.ajax({
-                            url : "../../controller/createMenu.php",
+                            url : "../../controller/createPesanan.php",
                             type : "POST",
                             data : addData,
                             success: function(res){
                                 const obj = JSON.parse(res);
                                 if(obj.statusCode == 200){
-                                    $('#menu').DataTable().ajax.reload();
+                                    $('#pesanan').DataTable().ajax.reload();
                                     swal({
                                         title: "Success!",
                                         text : "Data Berhasil Ditambahkan",
@@ -131,13 +203,16 @@ var menu = function () {
     };
 
     var getDataEdit = function(){
-        $('#menu').on('click', '#btn-edit', function () {
+        $('#pesanan').on('click', '#btn-edit', function () {
             var baris = $(this).parents('tr')[0];
-            var table = $('#menu').DataTable();
+            var table = $('#pesanan').DataTable();
             var data = table.row(baris).data();
             id = data[0];
-            $('#nama_menu').val(data[1]);
-            $('#harga_menu').val(data[2]);
+            var newDate = new Date(data[5].toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+            $('#pesanan_pesanan').val(data[6]);
+            $('#pelanggan_pesanan').val(data[7]);
+            $('#jumlah_pesanan').val(data[3]);
+            $('#tanggal_pesanan').val(newDate);
             $('#btn-simpan-edit').html('Simpan');
             $('#btn-reset-edit').html('Batal');
         });
@@ -147,7 +222,7 @@ var menu = function () {
         $('#btn-simpan-edit').click(function(){
             swal({
                 title: 'Apakah Anda Yakin?',
-                text: 'Menyimpan Data Menu Ini',
+                text: 'Menyimpan Data Pesanan Ini',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#2196F3',
@@ -163,24 +238,32 @@ var menu = function () {
                 if (isConfirm) {
                     var update = {
                         id: id,
-                        nama: $('#nama_menu').val(),
-                        harga: $('#harga_menu').val(),
+                        pesanan: $('#pesanan_pesanan').val(),
+                        pelanggan: $('#pelanggan_pesanan').val(),
+                        jumlah: $('#jumlah_pesanan').val(),
+                        tanggal: $('#tanggal_pesanan').val(),
                     };
-                    if(update.nama == ""){
-                        $("#nama_menu_error").html("<strong>Data Nama Kosong</strong>");
-                    } else if(update.harga == ""){
-                        $("#harga_menu_error").html("<strong>Data Harga Kosong</strong>");
+                    if(update.pesanan == "" || update.pesanan == "0"){
+                        $("#pesanan_pesanan_error").html("<strong>Data Pesanan Kosong</strong>");
+                    } else if(update.pelanggan == "" || update.pelanggan == "0"){
+                        $("#pelanggan_pesanan_error").html("<strong>Data Pelanggan Kosong</strong>");
+                    } else if(update.jumlah == ""){
+                        $("#jumlah_pesanan_error").html("<strong>Data Jumlah Kosong</strong>");
+                    } else if(update.tanggal == ""){
+                        $("#tanggal_pesanan_error").html("<strong>Data Tanggal Kosong</strong>");
                     } else{
-                        $("#nama_menu_error").html("");
-                        $("#harga_menu_error").html("");
+                        $("#pesanan_pesanan_error").val("0");
+                        $("#pelanggan_pesanan_error").val("0");
+                        $("#jumlah_pesanan_error").html("");
+                        $("#tanggal_pesanan_error").html("");
                         $.ajax({
-                            url : "../../controller/updateMenu.php",
+                            url : "../../controller/updatePesanan.php",
                             type : "POST",
                             data : update,
                             success: function(res){
                                 const obj = JSON.parse(res);
                                 if(obj.statusCode == 200){
-                                    $('#menu').DataTable().ajax.reload();
+                                    $('#pesanan').DataTable().ajax.reload();
                                     swal({
                                         title: "Success!",
                                         text : "Data Berhasil Diubah",
@@ -217,14 +300,14 @@ var menu = function () {
     };
 
     var deleteData = function () {
-        $('#menu').on('click', '#btn-hapus', function () {
+        $('#pesanan').on('click', '#btn-hapus', function () {
             var baris = $(this).parents('tr')[0];
-            var table = $('#menu').DataTable();
+            var table = $('#pesanan').DataTable();
             var data = table.row(baris).data();
             id = data[0];
             swal({
                 title: 'Apakah Anda Yakin?',
-                text: 'Menghapus Data Menu Ini',
+                text: 'Menghapus Data Pesanan Ini',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#2196F3',
@@ -242,27 +325,20 @@ var menu = function () {
                         id: id,
                     };
                     $.ajax({
-                        url : "../../controller/deleteMenu.php",
+                        url : "../../controller/deletePesanan.php",
                         type : "POST",
                         data : delData,
                         success: function(res){
                             const obj = JSON.parse(res);
                             if(obj.statusCode == 200){
-                                $('#menu').DataTable().ajax.reload();
+                                $('#pesanan').DataTable().ajax.reload();
                                 swal({
                                     title: "Success!",
                                     text : "Data Berhasil Dihapus",
                                     confirmButtonColor: "#66BB6A",
                                     type : "success",
                                 });
-                            } else if(obj.statusCode == 202){
-                                swal({
-                                    title: 'Error',
-                                    text : "Menu Memiliki Data Pesanan",
-                                    type : "error",
-                                    confirmButtonColor: "#EF5350",
-                                });
-                            } else{
+                            }else{
                                 swal({
                                     title: 'Error',
                                     text : data.message,
@@ -288,8 +364,10 @@ var menu = function () {
     };
     return {
         init: function () {
-            getDataMenu();
+            getDataPesanan();
             resetData();
+            dropdownPesanan();
+            dropdownPelanggan();
             tambahData();
             getDataEdit();
             editData();
@@ -303,5 +381,5 @@ $(document).ready(function(){
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    menu.init();
+    pesanan.init();
 });
