@@ -13,10 +13,10 @@ $.ajax({
                     '<li class="nav-item">'+
                         '<a class="nav-link" href="menu.php">Menu</a>'+
                     '</li>'+
-                    '<li class="nav-item active">'+
+                    '<li class="nav-item">'+
                         '<a class="nav-link" href="pesanan.php">Pesanan</a>'+
                     '</li>'+
-                    '<li class="nav-item">'+
+                    '<li class="nav-item active">'+
                         '<a class="nav-link" href="pelanggan.php">Pelanggan</a>'+
                     '</li>'+
                     '<li class="nav-item dropdown">'+

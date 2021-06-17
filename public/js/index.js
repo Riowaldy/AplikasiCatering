@@ -16,6 +16,9 @@ $.ajax({
                     '<li class="nav-item">'+
                         '<a class="nav-link" href="view/master/pesanan.php">Pesanan</a>'+
                     '</li>'+
+                    '<li class="nav-item">'+
+                        '<a class="nav-link" href="view/master/pelanggan.php">Pelanggan</a>'+
+                    '</li>'+
                     '<li class="nav-item dropdown">'+
                         '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
                             dataResult.username+
