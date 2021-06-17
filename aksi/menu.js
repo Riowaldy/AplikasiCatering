@@ -101,6 +101,13 @@ var menu = function () {
                                         confirmButtonColor: "#66BB6A",
                                         type : "success",
                                     });
+                                }else if(obj.statusCode == 202){
+                                    swal({
+                                        title: 'Error',
+                                        text : "Nama sudah digunakan",
+                                        type : "error",
+                                        confirmButtonColor: "#EF5350",
+                                    });
                                 }else{
                                     swal({
                                         title: 'Error',
