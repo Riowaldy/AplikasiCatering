@@ -10,7 +10,11 @@ var pesanan = function () {
                 { 'data': 'pesanan'},
                 { 'data': 'pelanggan'},
                 { 'data': 'jumlah'},
-                { 'data': 'harga'},
+                { 
+                    'data': 'harga', 
+                    'render': $.fn.dataTable.render.number( '.', ',', 2, 'Rp' )
+                
+                },
                 { 'data': 'tanggal'},
                 { 
                     'render': function (data, type, full, meta){

@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="jumlah_pesanan_tambah" class="control-label col-lg-6">Jumlah</label>
-                <input type="text" name="jumlah_pesanan_tambah" class="form-control" id="jumlah_pesanan_tambah" required autocomplete="off">
+                <input type="number" name="jumlah_pesanan_tambah" class="form-control" id="jumlah_pesanan_tambah" required autocomplete="off">
                 <span class="help-block" id="jumlah_pesanan_tambah_error"></span>
             </div>
             <div class="form-group">
@@ -66,7 +66,7 @@
             </div>
             <div class="form-group">
                 <label for="jumlah_pesanan" class="control-label col-lg-10">Jumlah</label>
-                <input type="text" name="jumlah_pesanan" class="form-control" id="jumlah_pesanan" required autocomplete="off">
+                <input type="number" name="jumlah_pesanan" class="form-control" id="jumlah_pesanan" required autocomplete="off">
                 <span class="help-block" id="jumlah_pesanan_error"></span>
             </div>
             <div class="form-group">

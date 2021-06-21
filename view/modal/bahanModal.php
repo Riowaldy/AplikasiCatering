@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="stok_bahan_tambah" class="control-label col-lg-2">Stok</label>
-                <input type="text" name="stok_bahan_tambah" class="form-control" id="stok_bahan_tambah" required autocomplete="off">
+                <input type="number" name="stok_bahan_tambah" class="form-control" id="stok_bahan_tambah" required autocomplete="off">
                 <span class="help-block" id="stok_bahan_tambah_error"></span>
             </div>
             <div class="form-group">
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label for="stok_bahan" class="control-label col-lg-2">Stok</label>
-                <input type="text" name="stok_bahan" class="form-control" id="stok_bahan" required autocomplete="off">
+                <input type="number" name="stok_bahan" class="form-control" id="stok_bahan" required autocomplete="off">
                 <span class="help-block" id="stok_bahan_error"></span>
             </div>
             <div class="form-group">

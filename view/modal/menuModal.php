@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="harga_menu_tambah" class="control-label col-lg-2">Harga</label>
-                <input type="text" name="harga_menu_tambah" class="form-control" id="harga_menu_tambah" required autocomplete="off">
+                <input type="number" name="harga_menu_tambah" class="form-control" id="harga_menu_tambah" required autocomplete="off">
                 <span class="help-block" id="harga_menu_tambah_error"></span>
             </div>
             <div class="form-group text-center">
@@ -47,7 +47,7 @@
             </div>
             <div class="form-group">
                 <label for="harga_menu" class="control-label col-lg-2">Harga</label>
-                <input type="text" name="harga_menu" class="form-control" id="harga_menu" required autocomplete="off">
+                <input type="number" name="harga_menu" class="form-control" id="harga_menu" required autocomplete="off">
                 <span class="help-block" id="harga_menu_error"></span>
             </div>
             <div class="form-group text-center">

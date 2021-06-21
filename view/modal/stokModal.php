@@ -61,7 +61,7 @@
             </div>
             <div class="form-group">
                 <label for="jumlah_stok" class="control-label col-lg-10">Jumlah</label>
-                <input type="text" name="jumlah_stok" class="form-control" id="jumlah_stok" required autocomplete="off">
+                <input type="number" step=".01" name="jumlah_stok" class="form-control" id="jumlah_stok" required autocomplete="off">
                 <span class="help-block" id="jumlah_stok_error"></span>
             </div>
             <div class="form-group text-center">

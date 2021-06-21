@@ -8,7 +8,11 @@ var menu = function () {
             'columns': [
                 { 'data': 'id'},
                 { 'data': 'nama'},
-                { 'data': 'harga'},
+                { 
+                    'data': 'harga', 
+                    'render': $.fn.dataTable.render.number( '.', ',', 2, 'Rp' )
+                
+                },
                 {
                     'render': function (data, type, full, meta) {
                         var html = '';
