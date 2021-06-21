@@ -56,6 +56,12 @@ var menu = function () {
             $('#harga_menu_tambah').val("");
             $('#harga_menu').val("");
         });
+        $('#btn-tambah').click(function(){
+            $("#nama_menu_tambah_error").html("");
+            $('#nama_menu_tambah').val("");
+            $("#harga_menu_tambah_error").html("");
+            $('#harga_menu_tambah').val("");
+        });
     }
 
     var tambahData = function () {

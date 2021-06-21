@@ -72,6 +72,14 @@ var stok = function () {
             $('#jumlah_stok_tambah').val("");
             $('#jumlah_stok').val("");
         });
+        $('#btn-tambah').click(function(){
+            $("#menu_stok_tambah_error").html("");
+            $('#menu_stok_tambah').val("0");
+            $("#bahan_stok_tambah_error").html("");
+            $('#bahan_stok_tambah').val("0");
+            $("#jumlah_stok_tambah_error").html("");
+            $('#jumlah_stok_tambah').val("");
+        });
     }
 
     var dropdownMenu = function(){

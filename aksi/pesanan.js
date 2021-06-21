@@ -97,6 +97,16 @@ var pesanan = function () {
             $('#tanggal_pesanan_tambah').val("");
             $('#tanggal_pesanan').val("");
         });
+        $('#btn-tambah').click(function(){
+            $("#pesanan_pesanan_tambah_error").html("");
+            $('#pesanan_pesanan_tambah').val("0");
+            $("#pelanggan_pesanan_tambah_error").html("");
+            $('#pelanggan_pesanan_tambah').val("0");
+            $("#jumlah_pesanan_tambah_error").html("");
+            $('#jumlah_pesanan_tambah').val("");
+            $("#tanggal_pesanan_tambah_error").html("");
+            $('#tanggal_pesanan_tambah').val("");
+        });
     }
 
     var dropdownPesanan = function(){

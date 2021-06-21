@@ -56,6 +56,12 @@ var pelanggan = function () {
             $('#password_pelanggan_tambah').val("");
             $('#password_pelanggan').val("");
         });
+        $('#btn-tambah').click(function(){
+            $("#username_pelanggan_tambah_error").html("");
+            $('#username_pelanggan_tambah').val("");
+            $("#password_pelanggan_tambah_error").html("");
+            $('#password_pelanggan_tambah').val("");
+        });
     }
 
     var tambahData = function () {

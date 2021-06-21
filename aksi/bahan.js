@@ -66,6 +66,14 @@ var bahan = function () {
             $('#satuan_bahan_tambah').val("");
             $('#satuan_bahan').val("");
         });
+        $('#btn-tambah').click(function(){
+            $("#nama_bahan_tambah_error").html("");
+            $('#nama_bahan_tambah').val("");
+            $("#stok_bahan_tambah_error").html("");
+            $('#stok_bahan_tambah').val("");
+            $("#satuan_bahan_tambah_error").html("");
+            $('#satuan_bahan_tambah').val("");
+        });
     }
 
     var tambahData = function () {
