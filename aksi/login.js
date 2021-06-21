@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	$('#btnLogin').on('click', function() {
-		console.log('yya');
 		var username = $('#username').val();
 		var password = $('#password').val();
 		if(username!="" && password!=""){
@@ -14,13 +13,17 @@ $(document).ready(function() {
 				},
 				cache: false,
 				success: function(dataResult){
-					console.log(dataResult);
                     var dataResult = JSON.parse(dataResult);
 					if(dataResult.statusCode==200){
 						location.href = "../master/menu.php";						
 					}
 					else if(dataResult.statusCode==201){
-                        alert('error !');
+                        swal({
+							title: "Error!",
+							text : "Username / Password Salah",
+							confirmButtonColor: "#EF5350",
+							type : "error",
+						});
 					}
 				}
 			});
