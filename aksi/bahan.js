@@ -285,7 +285,7 @@ var bahan = function () {
                             } else if(obj.statusCode == 202){
                                 swal({
                                     title: 'Error',
-                                    text : "Menu Memiliki Data Pesanan",
+                                    text : "Bahan Memiliki Data Stok",
                                     type : "error",
                                     confirmButtonColor: "#EF5350",
                                 });

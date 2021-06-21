@@ -1,14 +1,15 @@
-var menu = function () {
-    var getDataMenu = function(){
-        var t = $('#menu').DataTable({
+var stok = function () {
+    var getDataStok = function(){
+        var t = $('#stok').DataTable({
             'ajax': {
-                'url': '../../controller/readMenu.php',
+                'url': '../../controller/readStok.php',
                 'dataSrc': ''
             },
             'columns': [
                 { 'data': 'id'},
-                { 'data': 'nama'},
-                { 'data': 'harga'},
+                { 'data': 'menu'},
+                { 'data': 'bahan'},
+                { 'data': 'jumlah'},
                 {
                     'render': function (data, type, full, meta) {
                         var html = '';
@@ -20,11 +21,18 @@ var menu = function () {
                         html += '</div>';
                         return html;
                     }
-                }
+                },
+                { 'data': 'menuid'},
+                { 'data': 'bahanid'},
             ],
             "order": [],
             "columnDefs": [
-                { "orderable": false, "targets": [0, 3] }
+                {
+                    "targets": [5,6],
+                    "visible": false,
+                    "searchable": false
+                },
+                { "orderable": false, "targets": [0,4] }
             ]
         });
         t.on( 'order.dt search.dt', function () {
@@ -37,24 +45,70 @@ var menu = function () {
 
     var resetData = function(){
         $('#btn-reset-edit').click(function(){
-            $("#nama_menu_error").html("");
-            $("#nama_menu_tambah_error").html("");
-            $('#nama_menu_tambah').val("");
-            $('#nama_menu').val("");
-            $("#harga_menu_error").html("");
-            $("#harga_menu_tambah_error").html("");
-            $('#harga_menu_tambah').val("");
-            $('#harga_menu').val("");
+            $("#menu_stok_error").html("");
+            $("#menu_stok_tambah_error").html("");
+            $('#menu_stok_tambah').val("0");
+            $('#menu_stok').val("");
+            $("#bahan_stok_error").html("");
+            $("#bahan_stok_tambah_error").html("");
+            $('#bahan_stok_tambah').val("0");
+            $('#bahan_stok').val("");
+            $("#jumlah_stok_error").html("");
+            $("#jumlah_stok_tambah_error").html("");
+            $('#jumlah_stok_tambah').val("");
+            $('#jumlah_stok').val("");
         });
         $('#btn-reset-tambah').click(function(){
-            $("#nama_menu_error").html("");
-            $("#nama_menu_tambah_error").html("");
-            $('#nama_menu_tambah').val("");
-            $('#nama_menu').val("");
-            $("#harga_menu_error").html("");
-            $("#harga_menu_tambah_error").html("");
-            $('#harga_menu_tambah').val("");
-            $('#harga_menu').val("");
+            $("#menu_stok_error").html("");
+            $("#menu_stok_tambah_error").html("");
+            $('#menu_stok_tambah').val("0");
+            $('#menu_stok').val("");
+            $("#bahan_stok_error").html("");
+            $("#bahan_stok_tambah_error").html("");
+            $('#bahan_stok_tambah').val("0");
+            $('#bahan_stok').val("");
+            $("#jumlah_stok_error").html("");
+            $("#jumlah_stok_tambah_error").html("");
+            $('#jumlah_stok_tambah').val("");
+            $('#jumlah_stok').val("");
+        });
+    }
+
+    var dropdownMenu = function(){
+        var req = $.ajax({
+            url: '../../controller/dropPesanan.php',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            timeout: 30000,
+        });
+        req.done(function (data) {
+            var x = "";
+            x += '<option value="0">Pilih Menu</option>';
+            data.forEach(res => {
+                x += '<option value="' + res.id + '">' + res.nama + '</option>';
+            });
+            $('#menu_stok_tambah').append(x);
+            $('#menu_stok').append(x);
+        });
+    }
+
+    var dropdownBahan = function(){
+        var req = $.ajax({
+            url: '../../controller/dropBahan.php',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            timeout: 30000,
+        });
+        req.done(function (data) {
+            var x = "";
+            x += '<option value="0">Pilih Bahan</option>';
+            data.forEach(res => {
+                x += '<option value="' + res.id + '">' + res.nama + ' / ' + res.satuan + '</option>';
+            });
+            $('#bahan_stok_tambah').append(x);
+            $('#bahan_stok').append(x);
         });
     }
 
@@ -62,7 +116,7 @@ var menu = function () {
         $('#btn-simpan-tambah').click(function(){
             swal({
                 title: 'Apakah Anda Yakin?',
-                text: 'Menyimpan Data Menu Ini',
+                text: 'Menyimpan Data Stok Ini',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#2196F3',
@@ -77,37 +131,34 @@ var menu = function () {
                 window.onfocus = null;
                 if (isConfirm) {
                     var addData = {
-                        nama: $('#nama_menu_tambah').val(),
-                        harga: $('#harga_menu_tambah').val(),
+                        menu: $('#menu_stok_tambah').val(),
+                        bahan: $('#bahan_stok_tambah').val(),
+                        jumlah: $('#jumlah_stok_tambah').val(),
                     };
-                    if(addData.nama == ""){
-                        $("#nama_menu_tambah_error").html("<strong>Data Nama Kosong</strong>");
-                    }else if(addData.harga == ""){
-                        $("#harga_menu_tambah_error").html("<strong>Data Harga Kosong</strong>");
+                    if(addData.menu == "" || addData.menu == "0"){
+                        $("#menu_stok_tambah_error").html("<strong>Data Menu Kosong</strong>");
+                    }else if(addData.bahan == "" || addData.bahan == "0"){
+                        $("#bahan_stok_tambah_error").html("<strong>Data Bahan Kosong</strong>");
+                    }else if(addData.jumlah == ""){
+                        $("#jumlah_stok_tambah_error").html("<strong>Data Jumlah Kosong</strong>");
                     }
                     else{
-                        $("#nama_menu_tambah_error").html("");
-                        $("#harga_menu_tambah_error").html("");
+                        $("#menu_stok_tambah_error").html("");
+                        $("#bahan_stok_tambah_error").html("");
+                        $("#jumlah_stok_tambah_error").html("");
                         $.ajax({
-                            url : "../../controller/createMenu.php",
+                            url : "../../controller/createStok.php",
                             type : "POST",
                             data : addData,
                             success: function(res){
                                 const obj = JSON.parse(res);
                                 if(obj.statusCode == 200){
-                                    $('#menu').DataTable().ajax.reload();
+                                    $('#stok').DataTable().ajax.reload();
                                     swal({
                                         title: "Success!",
                                         text : "Data Berhasil Ditambahkan",
                                         confirmButtonColor: "#66BB6A",
                                         type : "success",
-                                    });
-                                }else if(obj.statusCode == 202){
-                                    swal({
-                                        title: 'Error',
-                                        text : "Nama sudah digunakan",
-                                        type : "error",
-                                        confirmButtonColor: "#EF5350",
                                     });
                                 }else{
                                     swal({
@@ -139,13 +190,14 @@ var menu = function () {
     };
 
     var getDataEdit = function(){
-        $('#menu').on('click', '#btn-edit', function () {
+        $('#stok').on('click', '#btn-edit', function () {
             var baris = $(this).parents('tr')[0];
-            var table = $('#menu').DataTable();
+            var table = $('#stok').DataTable();
             var data = table.row(baris).data();
             id = data[0];
-            $('#nama_menu').val(data[1]);
-            $('#harga_menu').val(data[2]);
+            $('#menu_stok').val(data[4]);
+            $('#bahan_stok').val(data[5]);
+            $('#jumlah_stok').val(data[3]);
             $('#btn-simpan-edit').html('Simpan');
             $('#btn-reset-edit').html('Batal');
         });
@@ -155,7 +207,7 @@ var menu = function () {
         $('#btn-simpan-edit').click(function(){
             swal({
                 title: 'Apakah Anda Yakin?',
-                text: 'Menyimpan Data Menu Ini',
+                text: 'Menyimpan Data Stok Ini',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#2196F3',
@@ -171,24 +223,28 @@ var menu = function () {
                 if (isConfirm) {
                     var update = {
                         id: id,
-                        nama: $('#nama_menu').val(),
-                        harga: $('#harga_menu').val(),
+                        menu: $('#menu_stok').val(),
+                        bahan: $('#bahan_stok').val(),
+                        jumlah: $('#jumlah_stok').val(),
                     };
-                    if(update.nama == ""){
-                        $("#nama_menu_error").html("<strong>Data Nama Kosong</strong>");
-                    } else if(update.harga == ""){
-                        $("#harga_menu_error").html("<strong>Data Harga Kosong</strong>");
+                    if(update.menu == "" || update.menu == "0"){
+                        $("#menu_stok_error").html("<strong>Data Menu Kosong</strong>");
+                    } else if(update.bahan == "" || update.bahan == "0"){
+                        $("#bahan_stok_error").html("<strong>Data Bahan Kosong</strong>");
+                    } else if(update.jumlah == ""){
+                        $("#jumlah_stok_error").html("<strong>Data Jumlah Kosong</strong>");
                     } else{
-                        $("#nama_menu_error").html("");
-                        $("#harga_menu_error").html("");
+                        $("#menu_stok_error").val("0");
+                        $("#bahan_stok_error").val("0");
+                        $("#jumlah_stok_error").html("");
                         $.ajax({
-                            url : "../../controller/updateMenu.php",
+                            url : "../../controller/updateStok.php",
                             type : "POST",
                             data : update,
                             success: function(res){
                                 const obj = JSON.parse(res);
                                 if(obj.statusCode == 200){
-                                    $('#menu').DataTable().ajax.reload();
+                                    $('#stok').DataTable().ajax.reload();
                                     swal({
                                         title: "Success!",
                                         text : "Data Berhasil Diubah",
@@ -225,14 +281,14 @@ var menu = function () {
     };
 
     var deleteData = function () {
-        $('#menu').on('click', '#btn-hapus', function () {
+        $('#stok').on('click', '#btn-hapus', function () {
             var baris = $(this).parents('tr')[0];
-            var table = $('#menu').DataTable();
+            var table = $('#stok').DataTable();
             var data = table.row(baris).data();
             id = data[0];
             swal({
                 title: 'Apakah Anda Yakin?',
-                text: 'Menghapus Data Menu Ini',
+                text: 'Menghapus Data Stok Ini',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#2196F3',
@@ -250,34 +306,20 @@ var menu = function () {
                         id: id,
                     };
                     $.ajax({
-                        url : "../../controller/deleteMenu.php",
+                        url : "../../controller/deleteStok.php",
                         type : "POST",
                         data : delData,
                         success: function(res){
                             const obj = JSON.parse(res);
                             if(obj.statusCode == 200){
-                                $('#menu').DataTable().ajax.reload();
+                                $('#stok').DataTable().ajax.reload();
                                 swal({
                                     title: "Success!",
                                     text : "Data Berhasil Dihapus",
                                     confirmButtonColor: "#66BB6A",
                                     type : "success",
                                 });
-                            } else if(obj.statusCode == 202){
-                                swal({
-                                    title: 'Error',
-                                    text : "Menu Memiliki Data Pesanan",
-                                    type : "error",
-                                    confirmButtonColor: "#EF5350",
-                                });
-                            } else if(obj.statusCode == 203){
-                                swal({
-                                    title: 'Error',
-                                    text : "Menu Memiliki Data Stok",
-                                    type : "error",
-                                    confirmButtonColor: "#EF5350",
-                                });
-                            } else{
+                            }else{
                                 swal({
                                     title: 'Error',
                                     text : data.message,
@@ -303,8 +345,10 @@ var menu = function () {
     };
     return {
         init: function () {
-            getDataMenu();
+            getDataStok();
             resetData();
+            dropdownMenu();
+            dropdownBahan();
             tambahData();
             getDataEdit();
             editData();
@@ -318,5 +362,5 @@ $(document).ready(function(){
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    menu.init();
+    stok.init();
 });
