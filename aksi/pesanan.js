@@ -57,6 +57,7 @@ var pesanan = function () {
                 cell.innerHTML = i+1;
             } );
         } ).draw();
+        $.fn.dataTable.ext.errMode = 'none';
     };
 
     var resetData = function(){

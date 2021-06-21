@@ -1,6 +1,6 @@
 <?php
     require 'koneksi.php';
-    $sql = "select max(id)+1 as id from users";
+    $sql = "select (case when (max(id)) is null then 1 else (max(id)+1) end) as id from users";
     $result = $conn->query($sql);
     $row = mysqli_fetch_array($result);
 

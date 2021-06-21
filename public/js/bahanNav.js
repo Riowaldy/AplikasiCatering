@@ -10,10 +10,10 @@ $.ajax({
                     '<li class="nav-item">'+
                         '<a class="nav-link" href="../../index.php">Home</a>'+
                     '</li>'+
-                    '<li class="nav-item active">'+
+                    '<li class="nav-item">'+
                         '<a class="nav-link" href="menu.php">Menu</a>'+
                     '</li>'+
-                    '<li class="nav-item">'+
+                    '<li class="nav-item active">'+
                         '<a class="nav-link" href="bahan.php">Bahan</a>'+
                     '</li>'+
                     '<li class="nav-item">'+
