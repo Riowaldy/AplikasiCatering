@@ -1,4 +1,30 @@
 var pesanan = function () {
+    var checkSession = function(){
+        $.ajax({
+            url: "../../controller/checkSession.php",
+            type: "GET",
+            cache: false,
+            success: function(dataResult){
+                var dataResult = JSON.parse(dataResult);
+                if(dataResult.statusCode==200){
+                    if(dataResult.role == 1){
+                        getDataPesanan();
+                        dropdownPelanggan();
+                        deleteData();
+                        statusData();
+                    }else if (dataResult.role == 2){
+                        getDataPesananPelanggan();
+                        dropdownPelangganPelanggan();
+                    }else{
+                        
+                    }
+                }
+                else {
+                    
+                }
+            }
+        });
+    }
     var getDataPesanan = function(){
         var t = $('#pesanan').DataTable({
             'ajax': {
@@ -38,6 +64,64 @@ var pesanan = function () {
                         
                         html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
                         html += '<a href="#hapus" class="btn btn-danger btn-raised btn-xs" id="btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></a>';
+                        html += '</div>';
+                        html += '</div>';
+                        return html;
+                    }
+                },
+                { 'data': 'menuid'},
+                { 'data': 'userid'},
+            ],
+            "order": [],
+            "columnDefs": [
+                {
+                    "targets": [8,9],
+                    "visible": false,
+                    "searchable": false
+                },
+                { "orderable": false, "targets": [0,7] }
+            ]
+        });
+        t.on( 'order.dt search.dt', function () {
+            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+        $.fn.dataTable.ext.errMode = 'none';
+    };
+
+    var getDataPesananPelanggan = function(){
+        var t = $('#pesanan').DataTable({
+            'ajax': {
+                'url': '../../controller/readPesanan.php',
+                'dataSrc': ''
+            },
+            'columns': [
+                { 'data': 'id'},
+                { 'data': 'pesanan'},
+                { 'data': 'pelanggan'},
+                { 'data': 'jumlah'},
+                { 
+                    'data': 'harga', 
+                    'render': $.fn.dataTable.render.number( '.', ',', 2, 'Rp' )
+                
+                },
+                { 'data': 'tanggal'},
+                { 
+                    'render': function (data, type, full, meta){
+                        if(full.status == "0"){
+                            return "Belum Lunas";
+                        }else{
+                            return "Lunas";
+                        }
+                    }
+                },
+                {
+                    'render': function (data, type, full, meta) {
+                        var html = '';
+                        html += '<div class="text-center">';
+                        html += '<div class="btn-group btn-group-solid">';
+                        html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
                         html += '</div>';
                         html += '</div>';
                         return html;
@@ -151,6 +235,25 @@ var pesanan = function () {
         });
     }
 
+    var dropdownPelangganPelanggan = function(){
+        var req = $.ajax({
+            url: '../../controller/dropPelanggan.php',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            timeout: 30000,
+        });
+        req.done(function (data) {
+            var x = "";
+            x += '<option value="0">Pilih Pelanggan</option>';
+            data.forEach(res => {
+                x += '<option value="' + res.id + '">' + res.nama + '</option>';
+            });
+            $('#pelanggan_pesanan_tambah').append(x);
+            $('#pelanggan_pesanan').append(x);
+        });
+    }
+
     var tambahData = function () {
         $('#btn-simpan-tambah').click(function(){
             swal({
@@ -237,11 +340,11 @@ var pesanan = function () {
             var baris = $(this).parents('tr')[0];
             var table = $('#pesanan').DataTable();
             var data = table.row(baris).data();
-            id = data[0];
-            var newDate = new Date(data[5].toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
-            $('#pesanan_pesanan').val(data[6]);
-            $('#pelanggan_pesanan').val(data[7]);
-            $('#jumlah_pesanan').val(data[3]);
+            id = data["id"];
+            var newDate = new Date(data["tanggal"].toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+            $('#pesanan_pesanan').val(data["menuid"]);
+            $('#pelanggan_pesanan').val(data["userid"]);
+            $('#jumlah_pesanan').val(data["jumlah"]);
             $('#tanggal_pesanan').val(newDate);
             $('#btn-simpan-edit').html('Simpan');
             $('#btn-reset-edit').html('Batal');
@@ -461,15 +564,12 @@ var pesanan = function () {
     };
     return {
         init: function () {
-            getDataPesanan();
+            checkSession();
             resetData();
             dropdownPesanan();
-            dropdownPelanggan();
             tambahData();
             getDataEdit();
             editData();
-            deleteData();
-            statusData();
         }
     };
 }();

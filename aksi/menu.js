@@ -1,4 +1,33 @@
 var menu = function () {
+    var checkSession = function(){
+        $.ajax({
+            url: "../../controller/checkSession.php",
+            type: "GET",
+            cache: false,
+            success: function(dataResult){
+                var dataResult = JSON.parse(dataResult);
+                if(dataResult.statusCode==200){
+                    if(dataResult.role == 1){
+                        getDataMenu();
+                        resetData();
+                        tambahData();
+                        getDataEdit();
+                        editData();
+                        deleteData();
+                    }else if (dataResult.role == 2){
+                        $('#btn-tambah').hide();
+                        $('td:nth-child(4),th:nth-child(4)').hide();
+                        getDataMenuPelanggan();
+                    }else{
+                        
+                    }
+                }
+                else {
+                    
+                }
+            }
+        });
+    }
     var getDataMenu = function(){
         var t = $('#menu').DataTable({
             'ajax': {
@@ -29,6 +58,34 @@ var menu = function () {
             "order": [],
             "columnDefs": [
                 { "orderable": false, "targets": [0, 3] }
+            ]
+        });
+        t.on( 'order.dt search.dt', function () {
+            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+        $.fn.dataTable.ext.errMode = 'none';
+    };
+
+    var getDataMenuPelanggan = function(){
+        var t = $('#menu').DataTable({
+            'ajax': {
+                'url': '../../controller/readMenu.php',
+                'dataSrc': ''
+            },
+            'columns': [
+                { 'data': 'id'},
+                { 'data': 'nama'},
+                { 
+                    'data': 'harga', 
+                    'render': $.fn.dataTable.render.number( '.', ',', 2, 'Rp' )
+                
+                }
+            ],
+            "order": [],
+            "columnDefs": [
+                { "orderable": false, "targets": [0] }
             ]
         });
         t.on( 'order.dt search.dt', function () {
@@ -313,12 +370,7 @@ var menu = function () {
     };
     return {
         init: function () {
-            getDataMenu();
-            resetData();
-            tambahData();
-            getDataEdit();
-            editData();
-            deleteData();
+            checkSession();
         }
     };
 }();
