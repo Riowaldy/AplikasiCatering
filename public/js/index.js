@@ -81,6 +81,9 @@ $.ajax({
                     '<li class="nav-item">'+
                         '<a class="nav-link" href="view/auth/login.php">Login</a>'+
                     '</li>'+
+                    '<li class="nav-item">'+
+                        '<a class="nav-link" href="view/auth/register.php">Register</a>'+
+                    '</li>'+
                 '</ul>'
             );
         }
