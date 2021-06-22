@@ -58,12 +58,11 @@ var pesanan = function () {
                         html += '<div class="btn-group btn-group-solid">';
                         if(full.status == "0"){
                             html += '<a href="#status" class="btn btn-success btn-raised btn-xs" id="btn-status" title="Status"><i class="fas fa-check"></i></a>&nbsp;';
+                            html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
+                            html += '<a href="#hapus" class="btn btn-danger btn-raised btn-xs" id="btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></a>';
                         }else{
                             html += '<a href="#status" class="btn btn-danger btn-raised btn-xs" id="btn-status" title="Status"><i class="fas fa-times"></i>&nbsp;</a>&nbsp;';
                         }
-                        
-                        html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
-                        html += '<a href="#hapus" class="btn btn-danger btn-raised btn-xs" id="btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></a>';
                         html += '</div>';
                         html += '</div>';
                         return html;
@@ -121,7 +120,9 @@ var pesanan = function () {
                         var html = '';
                         html += '<div class="text-center">';
                         html += '<div class="btn-group btn-group-solid">';
-                        html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
+                        if(full.status == "0"){
+                            html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
+                        }
                         html += '</div>';
                         html += '</div>';
                         return html;
@@ -306,7 +307,14 @@ var pesanan = function () {
                                         confirmButtonColor: "#66BB6A",
                                         type : "success",
                                     });
-                                }else{
+                                } else if (obj.statusCode == 202){
+                                    swal({
+                                        title: 'Error',
+                                        text : "Stok Bahan Kurang",
+                                        type : "error",
+                                        confirmButtonColor: "#EF5350",
+                                    });
+                                } else{
                                     swal({
                                         title: 'Error',
                                         text : "Data Gagal Ditambahkan",
@@ -462,9 +470,10 @@ var pesanan = function () {
                         type : "POST",
                         data : delData,
                         success: function(res){
+                            console.log(res);
                             const obj = JSON.parse(res);
                             if(obj.statusCode == 200){
-                                $('#pesanan').DataTable().ajax.reload();
+                                location.reload();
                                 swal({
                                     title: "Success!",
                                     text : "Data Berhasil Dihapus",
@@ -528,7 +537,6 @@ var pesanan = function () {
                         type : "POST",
                         data : updData,
                         success: function(res){
-                            console.log(res);
                             const obj = JSON.parse(res);
                             if(obj.statusCode == 200){
                                 $('#pesanan').DataTable().ajax.reload();

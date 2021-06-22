@@ -323,7 +323,7 @@ var menu = function () {
                         success: function(res){
                             const obj = JSON.parse(res);
                             if(obj.statusCode == 200){
-                                $('#menu').DataTable().ajax.reload();
+                                location.reload();
                                 swal({
                                     title: "Success!",
                                     text : "Data Berhasil Dihapus",

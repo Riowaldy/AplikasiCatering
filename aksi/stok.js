@@ -320,7 +320,7 @@ var stok = function () {
                         success: function(res){
                             const obj = JSON.parse(res);
                             if(obj.statusCode == 200){
-                                $('#stok').DataTable().ajax.reload();
+                                location.reload();
                                 swal({
                                     title: "Success!",
                                     text : "Data Berhasil Dihapus",
