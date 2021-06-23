@@ -15,7 +15,7 @@ Aplikasi Katering Dengan Bahasa Pemrograman PHP dan DB MySQL
 ## Todo
 - [ ] Register user tambah kolom no hp.
 - [ ] Login Redirect ke Home.
-- [ x ] Button Kirim WA kirim tagihan.
+- [x] Button Kirim WA kirim tagihan.
 - [ ] Export Excel & PDF Pesanan (Pesanan, Pelanggan, Jumlah, Harga, Tanggal).
 - [ ] Export Excel & PDF Bahan (Nama, Stok, Satuan).
 - [ ] Ganti template Admin LTE.
