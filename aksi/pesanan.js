@@ -59,6 +59,7 @@ var pesanan = function () {
                         if(full.status == "0"){
                             html += '<a href="#status" class="btn btn-success btn-raised btn-xs" id="btn-status" title="Status"><i class="fas fa-check"></i></a>&nbsp;';
                             html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
+                            html += '<a href="#bayar" class="btn btn-warning btn-raised btn-xs" id="btn-bayar" title="Ubah Data"><i class="fas fa-money-check-alt"></i></a>&nbsp;';
                             html += '<a href="#hapus" class="btn btn-danger btn-raised btn-xs" id="btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></a>';
                         }else{
                             html += '<a href="#status" class="btn btn-danger btn-raised btn-xs" id="btn-status" title="Status"><i class="fas fa-times"></i>&nbsp;</a>&nbsp;';
@@ -343,6 +344,17 @@ var pesanan = function () {
         });
     };
 
+    var getDataBayar = function(){
+        $('#pesanan').on('click', '#btn-bayar', function () {
+            var baris = $(this).parents('tr')[0];
+            var table = $('#pesanan').DataTable();
+            var data = table.row(baris).data();
+            jumlah = data["jumlah"];
+            harga = data["harga"];
+            window.open('https://api.whatsapp.com/send/?phone=6281216781317&text=Terima+kasih+sudah+belanja+di+Catering+Safira.%0D%0A%0D%0ATotal+Pesanan+anda+adalah+' + harga + '.%0D%0AJumlah+pesanan+' + jumlah + '.%0D%0A%0D%0AMohon+menyelesaikan+pembayaran.+Terima+kasih.','_blank');
+        });
+    };
+
     var getDataEdit = function(){
         $('#pesanan').on('click', '#btn-edit', function () {
             var baris = $(this).parents('tr')[0];
@@ -576,6 +588,7 @@ var pesanan = function () {
             resetData();
             dropdownPesanan();
             tambahData();
+            getDataBayar();
             getDataEdit();
             editData();
         }
