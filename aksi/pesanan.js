@@ -71,11 +71,12 @@ var pesanan = function () {
                 },
                 { 'data': 'menuid'},
                 { 'data': 'userid'},
+                { 'data': 'nohp'},
             ],
             "order": [],
             "columnDefs": [
                 {
-                    "targets": [8,9],
+                    "targets": [8,9,10],
                     "visible": false,
                     "searchable": false
                 },
@@ -351,7 +352,9 @@ var pesanan = function () {
             var data = table.row(baris).data();
             jumlah = data["jumlah"];
             harga = data["harga"];
-            window.open('https://api.whatsapp.com/send/?phone=6281216781317&text=Terima+kasih+sudah+belanja+di+Catering+Safira.%0D%0A%0D%0ATotal+Pesanan+anda+adalah+' + harga + '.%0D%0AJumlah+pesanan+' + jumlah + '.%0D%0A%0D%0AMohon+menyelesaikan+pembayaran.+Terima+kasih.','_blank');
+            nohp = data["nohp"];
+            nohp = nohp.substring(1);
+            window.open('https://api.whatsapp.com/send/?phone=62' + nohp + '&text=Terima+kasih+sudah+belanja+di+Catering+Safira.%0D%0A%0D%0ATotal+Pesanan+anda+adalah+' + harga + '.%0D%0AJumlah+pesanan+' + jumlah + '.%0D%0A%0D%0AMohon+menyelesaikan+pembayaran.+Terima+kasih.','_blank');
         });
     };
 

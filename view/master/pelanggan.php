@@ -26,6 +26,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Username</th>
+                                    <th>Nomor HP</th>
                                     <th>Password</th>
                                     <th>Action</th>
                                 </tr>

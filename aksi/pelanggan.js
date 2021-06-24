@@ -8,6 +8,7 @@ var pelanggan = function () {
             'columns': [
                 { 'data': 'id'},
                 { 'data': 'username'},
+                { 'data': 'nohp'},
                 { 'data': 'password'},
                 {
                     'render': function (data, type, full, meta) {
@@ -24,7 +25,7 @@ var pelanggan = function () {
             ],
             "order": [],
             "columnDefs": [
-                { "orderable": false, "targets": [0, 3] }
+                { "orderable": false, "targets": [0, 4] }
             ]
         });
         t.on( 'order.dt search.dt', function () {
@@ -41,6 +42,10 @@ var pelanggan = function () {
             $("#username_pelanggan_tambah_error").html("");
             $('#username_pelanggan_tambah').val("");
             $('#username_pelanggan').val("");
+            $("#nohp_pelanggan_error").html("");
+            $("#nohp_pelanggan_tambah_error").html("");
+            $('#nohp_pelanggan_tambah').val("");
+            $('#nohp_pelanggan').val("");
             $("#password_pelanggan_error").html("");
             $("#password_pelanggan_tambah_error").html("");
             $('#password_pelanggan_tambah').val("");
@@ -51,6 +56,10 @@ var pelanggan = function () {
             $("#username_pelanggan_tambah_error").html("");
             $('#username_pelanggan_tambah').val("");
             $('#username_pelanggan').val("");
+            $("#nohp_pelanggan_error").html("");
+            $("#nohp_pelanggan_tambah_error").html("");
+            $('#nohp_pelanggan_tambah').val("");
+            $('#nohp_pelanggan').val("");
             $("#password_pelanggan_error").html("");
             $("#password_pelanggan_tambah_error").html("");
             $('#password_pelanggan_tambah').val("");
@@ -59,6 +68,8 @@ var pelanggan = function () {
         $('#btn-tambah').click(function(){
             $("#username_pelanggan_tambah_error").html("");
             $('#username_pelanggan_tambah').val("");
+            $("#nohp_pelanggan_tambah_error").html("");
+            $('#nohp_pelanggan_tambah').val("");
             $("#password_pelanggan_tambah_error").html("");
             $('#password_pelanggan_tambah').val("");
         });
@@ -84,15 +95,21 @@ var pelanggan = function () {
                 if (isConfirm) {
                     var addData = {
                         username: $('#username_pelanggan_tambah').val(),
+                        nohp: $('#nohp_pelanggan_tambah').val(),
                         password: $('#password_pelanggan_tambah').val(),
                     };
                     if(addData.username == ""){
                         $("#username_pelanggan_tambah_error").html("<strong>Data Username Kosong</strong>");
+                    }else if(addData.nohp == ""){
+                        $("#nohp_pelanggan_tambah_error").html("<strong>Data Nomor HP Kosong</strong>");
                     }else if(addData.password == ""){
                         $("#password_pelanggan_tambah_error").html("<strong>Data Password Kosong</strong>");
+                    }else if(addData.password.length < 6){
+                        $("#password_pelanggan_tambah_error").html("<strong>Data Password Minimal 6 Karakter</strong>");
                     }
                     else{
                         $("#username_pelanggan_tambah_error").html("");
+                        $("#nohp_pelanggan_tambah_error").html("");
                         $("#password_pelanggan_tambah_error").html("");
                         $.ajax({
                             url : "../../controller/createPelanggan.php",
@@ -151,7 +168,8 @@ var pelanggan = function () {
             var data = table.row(baris).data();
             id = data[0];
             $('#username_pelanggan').val(data[1]);
-            $('#password_pelanggan').val(data[2]);
+            $('#nohp_pelanggan').val(data[2]);
+            $('#password_pelanggan').val(data[3]);
             $('#btn-simpan-edit').html('Simpan');
             $('#btn-reset-edit').html('Batal');
         });
@@ -178,14 +196,18 @@ var pelanggan = function () {
                     var update = {
                         id: id,
                         username: $('#username_pelanggan').val(),
+                        nohp: $('#nohp_pelanggan').val(),
                         password: $('#password_pelanggan').val(),
                     };
                     if(update.username == ""){
                         $("#username_pelanggan_error").html("<strong>Data Username Kosong</strong>");
                     } else if(update.password == ""){
                         $("#password_pelanggan_error").html("<strong>Data Password Kosong</strong>");
-                    } else{
+                    } else if(update.nohp == ""){
+                        $("#nohp_pelanggan_error").html("<strong>Data Nomor HP Kosong</strong>");
+                    }  else{
                         $("#username_pelanggan_error").html("");
+                        $("#nohp_pelanggan_error").html("");
                         $("#password_pelanggan_error").html("");
                         $.ajax({
                             url : "../../controller/updatePelanggan.php",

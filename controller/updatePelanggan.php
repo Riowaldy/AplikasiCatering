@@ -6,12 +6,13 @@
 	$row = mysqli_fetch_array($result);
 	
 	$username = $_POST['username'];
+	$nohp = $_POST['nohp'];
     $password = $_POST['password'];
 	date_default_timezone_set('Asia/Jakarta');
 	$updated_at = date("Y-m-d h:i:s A");
 	$created_at = $row['created_at'];
     $sql = "UPDATE `users` 
-	SET `username` = '$username', `password` = '$password', `updated_at` = '$updated_at', `created_at` = '$created_at' WHERE id = $id";
+	SET `username` = '$username', `nohp` = '$nohp',`password` = '$password', `updated_at` = '$updated_at', `created_at` = '$created_at' WHERE id = $id";
     if (mysqli_query($conn, $sql)) {
 		echo json_encode(array("statusCode"=>200));
 	} 
