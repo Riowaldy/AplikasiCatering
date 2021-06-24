@@ -6,6 +6,7 @@
 
     $id = $row['id'];
     $username = $_POST['username'];
+    $nohp = $_POST['nohp'];
     $password = $_POST['password'];
     $konfirmasipassword = $_POST['konfirmasipassword'];
     date_default_timezone_set('Asia/Jakarta');
@@ -18,8 +19,8 @@
         $row2 = mysqli_fetch_array($result);
         
         if($row2 == null){
-            $sql = "INSERT INTO users (id, username, password, updated_at, created_at)
-            VALUES ($id, '$username', '$password', '$updated_at', '$created_at')";
+            $sql = "INSERT INTO users (id, username, password, nohp, updated_at, created_at)
+            VALUES ($id, '$username', '$password', '$nohp', '$updated_at', '$created_at')";
             mysqli_query($conn, $sql);
 
             $sql = "select id from users where username = '$username'";

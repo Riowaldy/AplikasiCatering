@@ -17,6 +17,10 @@
                     <input type="text" class="form-control" id="username" placeholder="Masukkan Username" autocomplete="off">
                 </div>
                 <div class="form-group">
+                    <label for="nohp">Nomor HP</label>
+                    <input type="text" class="form-control" id="nohp" placeholder="Masukkan Nomor HP" autocomplete="off">
+                </div>
+                <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Masukkan Password" autocomplete="off">
                 </div>
