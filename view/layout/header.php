@@ -12,6 +12,6 @@
         <link href="../../public/library/sweetalert2/sweetalert2.min.css" rel="stylesheet">
         <link href="../../public/library/select2/dist/css/select2.min.css" rel="stylesheet">
 
-        <title>CRUD PHP NATIVE</title>
+        <title>APLIKASI CATERING</title>
     </head>
     <body>
