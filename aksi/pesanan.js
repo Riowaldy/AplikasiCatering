@@ -44,6 +44,11 @@ var pesanan = function () {
                 { 'data': 'tanggal'},
                 { 
                     'render': function (data, type, full, meta){
+                        var today = new Date();
+                        var day = new Date(full.tanggal);
+                        if(day < today){
+                            return "Batal";
+                        }
                         if(full.status == "0"){
                             return "Belum Lunas";
                         }else{
@@ -56,13 +61,15 @@ var pesanan = function () {
                         var html = '';
                         html += '<div class="text-center">';
                         html += '<div class="btn-group btn-group-solid">';
-                        if(full.status == "0"){
-                            html += '<a href="#status" class="btn btn-success btn-raised btn-xs" id="btn-status" title="Status"><i class="fas fa-check"></i></a>&nbsp;';
-                            html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
-                            html += '<a href="#bayar" class="btn btn-warning btn-raised btn-xs" id="btn-bayar" title="Ubah Data"><i class="fas fa-money-check-alt"></i></a>&nbsp;';
-                            html += '<a href="#hapus" class="btn btn-danger btn-raised btn-xs" id="btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></a>';
-                        }else{
-                            html += '<a href="#status" class="btn btn-danger btn-raised btn-xs" id="btn-status" title="Status"><i class="fas fa-times"></i>&nbsp;</a>&nbsp;';
+                        var today = new Date();
+                        var day = new Date(full.tanggal);
+                        if(day > today){
+                            if(full.status == "0"){
+                                html += '<a href="#status" class="btn btn-success btn-raised btn-xs" id="btn-status" title="Status"><i class="fas fa-check"></i></a>&nbsp;';
+                                html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
+                                html += '<a href="#bayar" class="btn btn-warning btn-raised btn-xs" id="btn-bayar" title="Ubah Data"><i class="fas fa-money-check-alt"></i></a>&nbsp;';
+                                html += '<a href="#hapus" class="btn btn-danger btn-raised btn-xs" id="btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></a>';
+                            }
                         }
                         html += '</div>';
                         html += '</div>';
@@ -281,6 +288,11 @@ var pesanan = function () {
                         jumlah: $('#jumlah_pesanan_tambah').val(),
                         tanggal: $('#tanggal_pesanan_tambah').val(),
                     };
+                    var today = new Date();
+                    today.setDate(today.getDate() + 7);
+                    var day = new Date(addData.tanggal);
+                    console.log(day);
+                    console.log(today);
                     if(addData.pesanan == "" || addData.pesanan == "0"){
                         $("#pesanan_pesanan_tambah_error").html("<strong>Data Pesanan Kosong</strong>");
                     }else if(addData.pelanggan == ""){
@@ -289,6 +301,8 @@ var pesanan = function () {
                         $("#jumlah_pesanan_tambah_error").html("<strong>Data Jumlah Kosong</strong>");
                     }else if(addData.tanggal == ""){
                         $("#tanggal_pesanan_tambah_error").html("<strong>Data Tanggal Kosong</strong>");
+                    }else if(day < today){
+                        $("#tanggal_pesanan_tambah_error").html("<strong>Tanggal Pemesanan Minimal H-7</strong>");
                     }
                     else{
                         $("#pesanan_pesanan_tambah_error").html("");
