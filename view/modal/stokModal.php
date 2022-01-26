@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header" style="background-color: rgba(0, 120, 255, 1); color:white;">
-            <h5 class="modal-title">Tambah Data Stok</h5>
+            <h5 class="modal-title">Tambah Data Bahan</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -41,7 +41,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header" style="background-color: rgba(0, 120, 255, 1); color:white;">
-            <h5 class="modal-title">Edit Data Stok</h5>
+            <h5 class="modal-title">Edit Data Bahan</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

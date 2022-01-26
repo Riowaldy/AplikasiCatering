@@ -166,7 +166,6 @@ var pesanan = function () {
             $('#pesanan_pesanan').val("");
             $("#pelanggan_pesanan_error").html("");
             $("#pelanggan_pesanan_tambah_error").html("");
-            $('#pelanggan_pesanan_tambah').val("0");
             $('#pelanggan_pesanan').val("");
             $("#jumlah_pesanan_error").html("");
             $("#jumlah_pesanan_tambah_error").html("");
@@ -184,7 +183,6 @@ var pesanan = function () {
             $('#pesanan_pesanan').val("");
             $("#pelanggan_pesanan_error").html("");
             $("#pelanggan_pesanan_tambah_error").html("");
-            $('#pelanggan_pesanan_tambah').val("0");
             $('#pelanggan_pesanan').val("");
             $("#jumlah_pesanan_error").html("");
             $("#jumlah_pesanan_tambah_error").html("");
@@ -199,7 +197,6 @@ var pesanan = function () {
             $("#pesanan_pesanan_tambah_error").html("");
             $('#pesanan_pesanan_tambah').val("0");
             $("#pelanggan_pesanan_tambah_error").html("");
-            $('#pelanggan_pesanan_tambah').val("0");
             $("#jumlah_pesanan_tambah_error").html("");
             $('#jumlah_pesanan_tambah').val("");
             $("#tanggal_pesanan_tambah_error").html("");
@@ -255,17 +252,21 @@ var pesanan = function () {
         });
         req.done(function (data) {
             var x = "";
-            x += '<option value="0">Pilih Pelanggan</option>';
             data.forEach(res => {
                 x += '<option value="' + res.id + '">' + res.nama + '</option>';
             });
             $('#pelanggan_pesanan_tambah').append(x);
+            $('#pelanggan_pesanan_tambah').attr("disabled", true);
             $('#pelanggan_pesanan').append(x);
         });
     }
 
     var tambahData = function () {
         $('#btn-simpan-tambah').click(function(){
+            $("#pesanan_pesanan_tambah_error").html("");
+            $("#pelanggan_pesanan_tambah_error").html("");
+            $("#jumlah_pesanan_tambah_error").html("");
+            $("#tanggal_pesanan_tambah_error").html("");
             swal({
                 title: 'Apakah Anda Yakin?',
                 text: 'Menyimpan Data Pesanan Ini',
@@ -291,18 +292,18 @@ var pesanan = function () {
                     var today = new Date();
                     today.setDate(today.getDate() + 7);
                     var day = new Date(addData.tanggal);
-                    console.log(day);
-                    console.log(today);
                     if(addData.pesanan == "" || addData.pesanan == "0"){
                         $("#pesanan_pesanan_tambah_error").html("<strong>Data Pesanan Kosong</strong>");
-                    }else if(addData.pelanggan == ""){
+                    }else if(addData.pelanggan == "" || addData.pelanggan == 0){
                         $("#pelanggan_pesanan_tambah_error").html("<strong>Data Pelanggan Kosong</strong>");
                     }else if(addData.jumlah == ""){
                         $("#jumlah_pesanan_tambah_error").html("<strong>Data Jumlah Kosong</strong>");
+                    }else if(addData.jumlah < 40){
+                        $("#jumlah_pesanan_tambah_error").html("<strong>Mininal Pemesanan 40 item</strong>");
                     }else if(addData.tanggal == ""){
                         $("#tanggal_pesanan_tambah_error").html("<strong>Data Tanggal Kosong</strong>");
                     }else if(day < today){
-                        $("#tanggal_pesanan_tambah_error").html("<strong>Tanggal Pemesanan Minimal H-7</strong>");
+                        $("#tanggal_pesanan_tambah_error").html("<strong>Tanggal Pemesanan Minimal H-7 Dari Sekarang</strong>");
                     }
                     else{
                         $("#pesanan_pesanan_tambah_error").html("");
@@ -390,6 +391,10 @@ var pesanan = function () {
 
     var editData = function () {
         $('#btn-simpan-edit').click(function(){
+            $("#pesanan_pesanan_error").html("");
+            $("#pelanggan_pesanan_error").html("");
+            $("#jumlah_pesanan_error").html("");
+            $("#tanggal_pesanan_error").html("");
             swal({
                 title: 'Apakah Anda Yakin?',
                 text: 'Menyimpan Data Pesanan Ini',
@@ -413,14 +418,21 @@ var pesanan = function () {
                         jumlah: $('#jumlah_pesanan').val(),
                         tanggal: $('#tanggal_pesanan').val(),
                     };
+                    var today = new Date();
+                    today.setDate(today.getDate() + 7);
+                    var day = new Date(update.tanggal);
                     if(update.pesanan == "" || update.pesanan == "0"){
                         $("#pesanan_pesanan_error").html("<strong>Data Pesanan Kosong</strong>");
                     } else if(update.pelanggan == "" || update.pelanggan == "0"){
                         $("#pelanggan_pesanan_error").html("<strong>Data Pelanggan Kosong</strong>");
                     } else if(update.jumlah == ""){
                         $("#jumlah_pesanan_error").html("<strong>Data Jumlah Kosong</strong>");
+                    } else if(update.jumlah < 40){
+                        $("#jumlah_pesanan_error").html("<strong>Mininal Pemesanan 40 item</strong>");
                     } else if(update.tanggal == ""){
                         $("#tanggal_pesanan_error").html("<strong>Data Tanggal Kosong</strong>");
+                    }else if(day < today){
+                        $("#tanggal_pesanan_error").html("<strong>Tanggal Pemesanan Minimal H-7 Dari Sekarang</strong>");
                     } else{
                         $("#pesanan_pesanan_error").val("0");
                         $("#pelanggan_pesanan_error").val("0");
@@ -499,7 +511,6 @@ var pesanan = function () {
                         type : "POST",
                         data : delData,
                         success: function(res){
-                            console.log(res);
                             const obj = JSON.parse(res);
                             if(obj.statusCode == 200){
                                 location.reload();

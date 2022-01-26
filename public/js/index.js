@@ -15,7 +15,7 @@ $.ajax({
                             '<a class="nav-link" href="view/master/menu.php">Menu</a>'+
                         '</li>'+
                         '<li class="nav-item">'+
-                            '<a class="nav-link" href="view/master/bahan.php">Bahan</a>'+
+                            '<a class="nav-link" href="view/master/bahan.php">Stok</a>'+
                         '</li>'+
                         '<li class="nav-item">'+
                             '<a class="nav-link" href="view/master/pelanggan.php">Pelanggan</a>'+
@@ -24,7 +24,7 @@ $.ajax({
                             '<a class="nav-link" href="view/master/pesanan.php">Pesanan</a>'+
                         '</li>'+
                         '<li class="nav-item">'+
-                            '<a class="nav-link" href="view/master/stok.php">Stok</a>'+
+                            '<a class="nav-link" href="view/master/stok.php">Bahan</a>'+
                         '</li>'+
                         '<li class="nav-item">'+
                             '<a class="nav-link" href="view/master/laporan.php">Laporan</a>'+

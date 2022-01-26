@@ -14,7 +14,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Tabel Stok</h4>
+                    <h4>Tabel Bahan</h4>
                 </div>
                 <div class="d-flex flex-row-reverse" style="margin: 0 25px 0 25px;">
                     <a href="#tambah" class="btn btn-primary btn-raised btn-xs col-lg-1" data-toggle="modal" data-target="#form-tambah" id="btn-tambah"><i class=""></i>Tambah</a>
