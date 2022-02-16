@@ -19,6 +19,11 @@
                 <input type="number" name="harga_menu_tambah" class="form-control" id="harga_menu_tambah" required autocomplete="off">
                 <span class="help-block" id="harga_menu_tambah_error"></span>
             </div>
+            <div class="form-group">
+                <label for="gambar_menu_tambah" class="control-label col-lg-2">Gambar</label>
+                <input type="file" class="form-control" accept="image/*" name="image" id="gambar_menu_tambah">
+                <span class="help-block" id="gambar_menu_tambah_error"></span>
+            </div>
             <div class="form-group text-center">
                 <button type="button" class="btn btn-primary" id="btn-simpan-tambah">Simpan</button>
                 <button type="button" class="btn btn-secondary" id="btn-reset-tambah" data-dismiss="modal">Batal</button>
@@ -49,6 +54,11 @@
                 <label for="harga_menu" class="control-label col-lg-2">Harga</label>
                 <input type="number" name="harga_menu" class="form-control" id="harga_menu" required autocomplete="off">
                 <span class="help-block" id="harga_menu_error"></span>
+            </div>
+            <div class="form-group">
+                <label for="gambar_menu" class="control-label col-lg-2">Gambar</label>
+                <input type="file" class="form-control" accept="image/*" name="image" id="gambar_menu">
+                <span class="help-block" id="gambar_menu_error"></span>
             </div>
             <div class="form-group text-center">
                 <button type="button" class="btn btn-primary" id="btn-simpan-edit">Simpan</button>

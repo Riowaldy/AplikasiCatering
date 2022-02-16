@@ -36,6 +36,15 @@ var menu = function () {
             },
             'columns': [
                 { 'data': 'id'},
+                {
+                    'render': function (data, type, full, meta) {
+                        var html = '';
+                        html += '<div class="text-center">';
+                        html += '<img src="../../public/img/menu/' + full.id + '/' + full.gambar + '" width=100 height=100>';
+                        html += '</div>';
+                        return html;
+                    }
+                },
                 { 'data': 'nama'},
                 { 
                     'data': 'harga', 
@@ -106,6 +115,10 @@ var menu = function () {
             $("#harga_menu_tambah_error").html("");
             $('#harga_menu_tambah').val("");
             $('#harga_menu').val("");
+            $("#gambar_menu_error").html("");
+            $("#gambar_menu_tambah_error").html("");
+            $('#gambar_menu_tambah').val("");
+            $('#gambar_menu').val("");
         });
         $('#btn-reset-tambah').click(function(){
             $("#nama_menu_error").html("");
@@ -116,12 +129,18 @@ var menu = function () {
             $("#harga_menu_tambah_error").html("");
             $('#harga_menu_tambah').val("");
             $('#harga_menu').val("");
+            $("#gambar_menu_error").html("");
+            $("#gambar_menu_tambah_error").html("");
+            $('#gambar_menu_tambah').val("");
+            $('#gambar_menu').val("");
         });
         $('#btn-tambah').click(function(){
             $("#nama_menu_tambah_error").html("");
             $('#nama_menu_tambah').val("");
             $("#harga_menu_tambah_error").html("");
             $('#harga_menu_tambah').val("");
+            $("#gambar_menu_tambah_error").html("");
+            $('#gambar_menu_tambah').val("");
         });
     }
 
@@ -143,59 +162,77 @@ var menu = function () {
                 window.onkeydown = null;
                 window.onfocus = null;
                 if (isConfirm) {
+                    $("#nama_menu_tambah_error").html("");
+                    $("#harga_menu_tambah_error").html("");
+                    $("#gambar_menu_tambah_error").html("");
+                    
                     var addData = {
                         nama: $('#nama_menu_tambah').val(),
                         harga: $('#harga_menu_tambah').val(),
+                        gambar: $('#gambar_menu_tambah').val(),
                     };
+                    
+                    var myFile = $('#gambar_menu_tambah').prop('files');
+                    var formData = new FormData();
+                    formData.append('nama', $('#nama_menu_tambah').val());
+                    formData.append('harga', $('#harga_menu_tambah').val());
+                    formData.append('gambar', myFile[0]);
                     if(addData.nama == ""){
                         $("#nama_menu_tambah_error").html("<strong>Data Nama Kosong</strong>");
                     }else if(addData.harga == ""){
                         $("#harga_menu_tambah_error").html("<strong>Data Harga Kosong</strong>");
+                    }else if(addData.gambar == ""){
+                        $("#gambar_menu_tambah_error").html("<strong>Data Gambar Kosong</strong>");
                     }
                     else{
-                        $("#nama_menu_tambah_error").html("");
-                        $("#harga_menu_tambah_error").html("");
-                        $.ajax({
-                            url : "../../controller/createMenu.php",
-                            type : "POST",
-                            data : addData,
-                            success: function(res){
-                                const obj = JSON.parse(res);
-                                if(obj.statusCode == 200){
-                                    $('#menu').DataTable().ajax.reload();
-                                    swal({
-                                        title: "Success!",
-                                        text : "Data Berhasil Ditambahkan",
-                                        confirmButtonColor: "#66BB6A",
-                                        type : "success",
-                                    });
-                                }else if(obj.statusCode == 202){
-                                    swal({
-                                        title: 'Error',
-                                        text : "Nama sudah digunakan",
-                                        type : "error",
-                                        confirmButtonColor: "#EF5350",
-                                    });
-                                }else{
+                        var extention = myFile[0].name.split('.').pop();
+                        if(extention != "jpg" & extention != "jpeg" & extention != "png"){
+                            $("#gambar_menu_tambah_error").html("<strong>Format Gambar Harus (jpg / jpeg / png)</strong>");
+                        }else{
+                            $.ajax({
+                                url : "../../controller/createMenu.php",
+                                type : "POST",
+                                data : formData,
+                                processData: false,
+                                contentType: false,
+                                success: function(res){
+                                    const obj = JSON.parse(res);
+                                    if(obj.statusCode == 200){
+                                        $('#menu').DataTable().ajax.reload();
+                                        swal({
+                                            title: "Success!",
+                                            text : "Data Berhasil Ditambahkan",
+                                            confirmButtonColor: "#66BB6A",
+                                            type : "success",
+                                        });
+                                    }else if(obj.statusCode == 202){
+                                        swal({
+                                            title: 'Error',
+                                            text : "Nama sudah digunakan",
+                                            type : "error",
+                                            confirmButtonColor: "#EF5350",
+                                        });
+                                    }else{
+                                        swal({
+                                            title: 'Error',
+                                            text : "Data Gagal Ditambahkan",
+                                            type : "error",
+                                            confirmButtonColor: "#EF5350",
+                                        });
+                                    }
+                                    $('#form-tambah').modal('hide');
+                                },
+                                error : function(res){
                                     swal({
                                         title: 'Error',
                                         text : "Data Gagal Ditambahkan",
                                         type : "error",
                                         confirmButtonColor: "#EF5350",
                                     });
+                                    $('#form-tambah').modal('hide');
                                 }
-                                $('#form-tambah').modal('hide');
-                            },
-                            error : function(res){
-                                swal({
-                                    title: 'Error',
-                                    text : "Data Gagal Ditambahkan",
-                                    type : "error",
-                                    confirmButtonColor: "#EF5350",
-                                });
-                                $('#form-tambah').modal('hide');
-                            }
-                        })
+                            })
+                        }
                     }
                 } else {
                     swal("Aksi Dibatalkan!");
@@ -236,52 +273,75 @@ var menu = function () {
                 window.onkeydown = null;
                 window.onfocus = null;
                 if (isConfirm) {
+
                     var update = {
                         id: id,
                         nama: $('#nama_menu').val(),
                         harga: $('#harga_menu').val(),
+                        gambar: $('#gambar_menu').val(),
                     };
+
+                    var myFile = $('#gambar_menu').prop('files');
+                    var formData = new FormData();
+                    formData.append('id', id);
+                    formData.append('nama', $('#nama_menu').val());
+                    formData.append('harga', $('#harga_menu').val());
+                    formData.append('gambar', myFile[0]);
+                    if(myFile.length == 0){
+                        formData.append('cekgambar', 0);
+                    }else{
+                        formData.append('cekgambar', 1);
+                    }
                     if(update.nama == ""){
                         $("#nama_menu_error").html("<strong>Data Nama Kosong</strong>");
                     } else if(update.harga == ""){
                         $("#harga_menu_error").html("<strong>Data Harga Kosong</strong>");
                     } else{
-                        $("#nama_menu_error").html("");
-                        $("#harga_menu_error").html("");
-                        $.ajax({
-                            url : "../../controller/updateMenu.php",
-                            type : "POST",
-                            data : update,
-                            success: function(res){
-                                const obj = JSON.parse(res);
-                                if(obj.statusCode == 200){
-                                    $('#menu').DataTable().ajax.reload();
-                                    swal({
-                                        title: "Success!",
-                                        text : "Data Berhasil Diubah",
-                                        confirmButtonColor: "#66BB6A",
-                                        type : "success",
-                                    });
-                                }else{
+                        var extention = "jpg";
+                        if(update.gambar != ""){
+                            extention = myFile[0].name.split('.').pop();
+                        }
+                        if(extention != "jpg" && extention != "jpeg" && extention != "png"){
+                            $("#gambar_menu_error").html("<strong>Format Gambar Harus (jpg / jpeg / png)</strong>");
+                        }else{
+                            $.ajax({
+                                url : "../../controller/updateMenu.php",
+                                type : "POST",
+                                data : formData,
+                                processData: false,
+                                contentType: false,
+                                success: function(res){
+                                    console.log(res);
+                                    const obj = JSON.parse(res);
+                                    if(obj.statusCode == 200){
+                                        $('#menu').DataTable().ajax.reload();
+                                        swal({
+                                            title: "Success!",
+                                            text : "Data Berhasil Diubah",
+                                            confirmButtonColor: "#66BB6A",
+                                            type : "success",
+                                        });
+                                    }else{
+                                        swal({
+                                            title: "Error!",
+                                            text : "Data Tidak Valid",
+                                            confirmButtonColor: "#EF5350",
+                                            type : "error",
+                                        });
+                                    }
+                                    $('#form-edit').modal('hide');
+                                },
+                                error : function(res){
                                     swal({
                                         title: "Error!",
                                         text : "Data Tidak Valid",
                                         confirmButtonColor: "#EF5350",
                                         type : "error",
                                     });
+                                    $('#form-edit').modal('hide');
                                 }
-                                $('#form-edit').modal('hide');
-                            },
-                            error : function(res){
-                                swal({
-                                    title: "Error!",
-                                    text : "Data Tidak Valid",
-                                    confirmButtonColor: "#EF5350",
-                                    type : "error",
-                                });
-                                $('#form-edit').modal('hide');
-                            }
-                        });
+                            });
+                        }
                     }
                 } else {
                     swal("Aksi Dibatalkan!");

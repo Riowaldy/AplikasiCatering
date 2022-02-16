@@ -25,6 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Gambar</th>
                                     <th>Nama</th>
                                     <th>Harga</th>
                                     <th>Action</th>
