@@ -82,4 +82,50 @@
       </div>
     </div>
 </form>
+
+<form action="#" class="modal" tabindex="-1" role="dialog" id="form-bukti" novalidate="novalidate">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: rgba(0, 120, 255, 1); color:white;">
+            <h5 class="modal-title">Upload Bukti Pembayaran</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="gambar_menu" class="control-label col-lg-4">Bukti Bayar</label>
+                <input type="file" class="form-control" accept="image/*" name="image" id="gambar_menu">
+                <span class="help-block" id="gambar_menu_error"></span>
+            </div>
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-primary" id="btn-simpan-bukti">Simpan</button>
+                <button type="button" class="btn btn-secondary" id="btn-reset-bukti" data-dismiss="modal">Batal</button>
+            </div>
+        </div>
+      </div>
+    </div>
+</form>
+
+<form action="#" class="modal" tabindex="-1" role="dialog" id="form-zoom" novalidate="novalidate">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: rgba(0, 120, 255, 1); color:white;">
+            <h5 class="modal-title">Bukti Pembayaran</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="text-center">
+                <div class="form-group" id="bukti_zoom">
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-secondary" id="btn-reset-bukti" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+      </div>
+    </div>
+</form>
 <!-- end update -->

@@ -6,7 +6,36 @@ $.ajax({
         var dataResult = JSON.parse(dataResult);
         if(dataResult.statusCode==200){
             var x = "";
+            var y = "";
+            var isiy = "";
             if(dataResult.role == 1){
+                $.ajax({
+                    url: "controller/cekStokHabis.php",
+                    type: "GET",
+                    cache: false,
+                    success: function(dataResult2){
+                        var dataResult2 = JSON.parse(dataResult2);
+                        dataResult2.forEach(function(item) {
+                            isiy += '<div class="row">';
+                            isiy += '<div class="col">'+item.nama+'</div>'
+                            isiy += '</div>';
+                        });
+                        y = `<div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header" style="background-color: #5a85ff; color: white;">
+                                    Stok Barang Habis
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        ${isiy}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>`;
+                        $(".slide").hide();
+                        $('#card-dashboard').append(y);
+                    }
+                });
                 x = '<ul class="navbar-nav mr-auto">' +
                         '<li class="nav-item active">'+
                             '<a class="nav-link" href="index.php">Home</a>'+
@@ -39,6 +68,34 @@ $.ajax({
                         '</li>'+
                     '</ul>';
             }else if (dataResult.role == 2){
+                $.ajax({
+                    url: "controller/cekPesananBelumBayar.php",
+                    type: "GET",
+                    cache: false,
+                    success: function(dataResult2){
+                        var dataResult2 = JSON.parse(dataResult2);
+                        dataResult2.forEach(function(item) {
+                            isiy += '<div class="row">';
+                            isiy += '<div class="col">'+item.nama+'</div>'
+                            isiy += '<div class="col">'+item.jumlah+' porsi</div>'
+                            isiy += '</div>';
+                        });
+                        y = `<div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header" style="background-color: #5a85ff; color: white;">
+                                    Pesanan Belum Bayar
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        ${isiy}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>`;
+                        $(".slide").hide();
+                        $('#card-dashboard').append(y);
+                    }
+                });
                 x = '<ul class="navbar-nav mr-auto">' +
                         '<li class="nav-item active">'+
                             '<a class="nav-link" href="index.php">Home</a>'+

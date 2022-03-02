@@ -40,7 +40,9 @@ var menu = function () {
                     'render': function (data, type, full, meta) {
                         var html = '';
                         html += '<div class="text-center">';
-                        html += '<img src="../../public/img/menu/' + full.id + '/' + full.gambar + '" width=100 height=100>';
+                        if(full.gambar != null){
+                            html += '<img id="btn-zoom" data-toggle="modal" data-target="#form-zoom" style="cursor: pointer;" src="../../public/img/menu/' + full.id + '/' + full.gambar + '" width=100 height=100>';
+                        }
                         html += '</div>';
                         return html;
                     }
@@ -89,7 +91,9 @@ var menu = function () {
                     'render': function (data, type, full, meta) {
                         var html = '';
                         html += '<div class="text-center">';
-                        html += '<img src="../../public/img/menu/' + full.id + '/' + full.gambar + '" width=100 height=100>';
+                        if(full.gambar != null){
+                            html += '<img id="btn-zoom" data-toggle="modal" data-target="#form-zoom" style="cursor: pointer;" src="../../public/img/menu/' + full.id + '/' + full.gambar + '" width=100 height=100>';
+                        }
                         html += '</div>';
                         return html;
                     }
@@ -273,6 +277,18 @@ var menu = function () {
         });
     };
 
+    var getDataZoom = function(){
+        $('#menu').on('click', '#btn-zoom', function () {
+            var baris = $(this).parents('tr')[0];
+            var table = $('#menu').DataTable();
+            var data = table.row(baris).data();
+            console.log(data);
+            id = data[0];
+            $('#bukti_zoom').html('<img width="200" src="../../public/img/menu/' + data[0] + '/' + data[3] + '">');
+            $('#btn-reset-bukti').html('Close');
+        });
+    };
+
     var editData = function () {
         $('#btn-simpan-edit').click(function(){
             swal({
@@ -449,6 +465,7 @@ var menu = function () {
     return {
         init: function () {
             checkSession();
+            getDataZoom();
         }
     };
 }();

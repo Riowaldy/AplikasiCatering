@@ -13,8 +13,9 @@
     <div class="slide">
         <img class="d-block w-100" src="public/img/1.jpeg" style="height:30em; margin-top:4em;">
     </div>
-    <div class="judul text-center">
-        <h3>Selamat datang di Aplikasi Catering</h3>
+    <div class="judul text-center" style="margin-top: 5em;">
+        <div class="row col-md-12" id="card-dashboard">
+        </div>
     </div>
 </div>
 

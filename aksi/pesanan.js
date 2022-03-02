@@ -42,6 +42,17 @@ var pesanan = function () {
                 
                 },
                 { 'data': 'tanggal'},
+                {
+                    'render': function (data, type, full, meta) {
+                        var html = '';
+                        html += '<div class="text-center">';
+                        if(full.bukti != null){
+                            html += '<img id="btn-zoom" data-toggle="modal" data-target="#form-zoom" style="cursor: pointer;" src="../../public/img/bukti/' + full.id + '/' + full.bukti + '" width=100 height=100>';
+                        }
+                        html += '</div>';
+                        return html;
+                    }
+                },
                 { 
                     'render': function (data, type, full, meta){
                         var today = new Date();
@@ -66,9 +77,7 @@ var pesanan = function () {
                         if(day > today){
                             if(full.status == "0"){
                                 html += '<a href="#status" class="btn btn-success btn-raised btn-xs" id="btn-status" title="Status"><i class="fas fa-check"></i></a>&nbsp;';
-                                html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
                                 html += '<a href="#bayar" class="btn btn-warning btn-raised btn-xs" id="btn-bayar" title="Ubah Data"><i class="fas fa-money-check-alt"></i></a>&nbsp;';
-                                html += '<a href="#hapus" class="btn btn-danger btn-raised btn-xs" id="btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></a>';
                             }
                         }
                         html += '</div>';
@@ -83,11 +92,11 @@ var pesanan = function () {
             "order": [],
             "columnDefs": [
                 {
-                    "targets": [8,9,10],
+                    "targets": [9,10,11],
                     "visible": false,
                     "searchable": false
                 },
-                { "orderable": false, "targets": [0,7] }
+                { "orderable": false, "targets": [0,8] }
             ]
         });
         t.on( 'order.dt search.dt', function () {
@@ -112,9 +121,19 @@ var pesanan = function () {
                 { 
                     'data': 'harga', 
                     'render': $.fn.dataTable.render.number( '.', ',', 2, 'Rp' )
-                
                 },
                 { 'data': 'tanggal'},
+                {
+                    'render': function (data, type, full, meta) {
+                        var html = '';
+                        html += '<div class="text-center">';
+                        if(full.bukti != null){
+                            html += '<img id="btn-zoom" data-toggle="modal" data-target="#form-zoom" style="cursor: pointer;" src="../../public/img/bukti/' + full.id + '/' + full.bukti + '" width=100 height=100>';
+                        }
+                        html += '</div>';
+                        return html;
+                    }
+                },
                 { 
                     'render': function (data, type, full, meta){
                         if(full.status == "0"){
@@ -131,6 +150,7 @@ var pesanan = function () {
                         html += '<div class="btn-group btn-group-solid">';
                         if(full.status == "0"){
                             html += '<a href="#edit" class="btn btn-primary btn-raised btn-xs" data-toggle="modal" data-target="#form-edit" id="btn-edit" title="Ubah Data"><i class="fas fa-edit"></i></a>&nbsp;';
+                            html += '<a href="#bukti" class="btn btn-warning btn-raised btn-xs" data-toggle="modal" data-target="#form-bukti" id="btn-bukti" title="Upload Bukti"><i class="fas fa-money-check-alt"></i></a>&nbsp;';
                         }
                         html += '</div>';
                         html += '</div>';
@@ -143,11 +163,11 @@ var pesanan = function () {
             "order": [],
             "columnDefs": [
                 {
-                    "targets": [8,9],
+                    "targets": [9,10],
                     "visible": false,
                     "searchable": false
                 },
-                { "orderable": false, "targets": [0,7] }
+                { "orderable": false, "targets": [0,8] }
             ]
         });
         t.on( 'order.dt search.dt', function () {
@@ -175,6 +195,8 @@ var pesanan = function () {
             $("#tanggal_pesanan_tambah_error").html("");
             $('#tanggal_pesanan_tambah').val("");
             $('#tanggal_pesanan').val("");
+            $("#gambar_menu_error").html("");
+            $('#gambar_menu').val("");
         });
         $('#btn-reset-tambah').click(function(){
             $("#pesanan_pesanan_error").html("");
@@ -192,6 +214,8 @@ var pesanan = function () {
             $("#tanggal_pesanan_tambah_error").html("");
             $('#tanggal_pesanan_tambah').val("");
             $('#tanggal_pesanan').val("");
+            $("#gambar_menu_error").html("");
+            $('#gambar_menu').val("");
         });
         $('#btn-tambah').click(function(){
             $("#pesanan_pesanan_tambah_error").html("");
@@ -201,6 +225,8 @@ var pesanan = function () {
             $('#jumlah_pesanan_tambah').val("");
             $("#tanggal_pesanan_tambah_error").html("");
             $('#tanggal_pesanan_tambah').val("");
+            $("#gambar_menu_error").html("");
+            $('#gambar_menu').val("");
         });
     }
 
@@ -324,13 +350,6 @@ var pesanan = function () {
                                         confirmButtonColor: "#66BB6A",
                                         type : "success",
                                     });
-                                } else if (obj.statusCode == 202){
-                                    swal({
-                                        title: 'Error',
-                                        text : "Stok Bahan Kurang",
-                                        type : "error",
-                                        confirmButtonColor: "#EF5350",
-                                    });
                                 } else{
                                     swal({
                                         title: 'Error',
@@ -388,6 +407,91 @@ var pesanan = function () {
             $('#btn-reset-edit').html('Batal');
         });
     };
+
+    var getDataBukti = function(){
+        $('#pesanan').on('click', '#btn-bukti', function () {
+            var baris = $(this).parents('tr')[0];
+            var table = $('#pesanan').DataTable();
+            var data = table.row(baris).data();
+            id = data[0];
+            $('#btn-simpan-bukti').html('Simpan');
+            $('#btn-reset-bukti').html('Batal');
+        });
+    };
+
+    var getDataZoom = function(){
+        $('#pesanan').on('click', '#btn-zoom', function () {
+            var baris = $(this).parents('tr')[0];
+            var table = $('#pesanan').DataTable();
+            var data = table.row(baris).data();
+            id = data[0];
+            $('#bukti_zoom').html('<img width="200" src="../../public/img/bukti/' + data[0] + '/' + data[10] + '">');
+            $('#btn-reset-bukti').html('Close');
+        });
+    };
+
+    var buktiData = function () {
+        $('#btn-simpan-bukti').click(function(){
+            var update = {
+                id: id,
+                gambar: $('#gambar_menu').val(),
+            };
+            var myFile = $('#gambar_menu').prop('files');
+            var formData = new FormData();
+            formData.append('id', id);
+            formData.append('gambar', myFile[0]);
+            if(myFile.length == 0){
+                formData.append('cekgambar', 0);
+            }else{
+                formData.append('cekgambar', 1);
+            }
+            var extention = "jpg";
+            if(update.gambar != ""){
+                extention = myFile[0].name.split('.').pop();
+            }
+            if(extention != "jpg" && extention != "jpeg" && extention != "png"){
+                $("#gambar_menu_error").html("<strong>Format Gambar Harus (jpg / jpeg / png)</strong>");
+            }else{
+                $.ajax({
+                    url : "../../controller/buktiPesanan.php",
+                    type : "POST",
+                    data : formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res){
+                        console.log(res);
+                        const obj = JSON.parse(res);
+                        if(obj.statusCode == 200){
+                            $('#pesanan').DataTable().ajax.reload();
+                            swal({
+                                title: "Success!",
+                                text : "Data Berhasil Diupload",
+                                confirmButtonColor: "#66BB6A",
+                                type : "success",
+                            });
+                        }else{
+                            swal({
+                                title: "Error!",
+                                text : "Data Tidak Valid",
+                                confirmButtonColor: "#EF5350",
+                                type : "error",
+                            });
+                        }
+                        $('#form-bukti').modal('hide');
+                    },
+                    error : function(res){
+                        swal({
+                            title: "Error!",
+                            text : "Data Tidak Valid",
+                            confirmButtonColor: "#EF5350",
+                            type : "error",
+                        });
+                        $('#form-bukti').modal('hide');
+                    }
+                });
+            }
+        })
+    }
 
     var editData = function () {
         $('#btn-simpan-edit').click(function(){
@@ -619,6 +723,9 @@ var pesanan = function () {
             getDataBayar();
             getDataEdit();
             editData();
+            getDataBukti();
+            buktiData();
+            getDataZoom();
         }
     };
 }();

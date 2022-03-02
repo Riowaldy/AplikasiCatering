@@ -30,6 +30,7 @@
                                     <th>Jumlah</th>
                                     <th>Harga</th>
                                     <th>Tanggal Pesanan</th>
+                                    <th>Bukti Bayar</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
