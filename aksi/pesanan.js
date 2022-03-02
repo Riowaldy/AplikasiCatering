@@ -459,7 +459,6 @@ var pesanan = function () {
                     processData: false,
                     contentType: false,
                     success: function(res){
-                        console.log(res);
                         const obj = JSON.parse(res);
                         if(obj.statusCode == 200){
                             $('#pesanan').DataTable().ajax.reload();
