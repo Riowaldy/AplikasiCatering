@@ -53,11 +53,9 @@
 				$stokbahan = $row3["stok"];
 
 				$stokupdate = $stokbahan - $jumlahakhir;
-				if($stokupdate > 0){
-					$hitung++;
-					$arrstok[] = $stokupdate;
-					$arrbahan[] = $bahan_id;
-				}
+				$hitung++;
+				$arrstok[] = $stokupdate;
+				$arrbahan[] = $bahan_id;
 			}
 			if($hitung == count($data)){
 				for ($x = 0; $x < count($arrstok); $x++) {
