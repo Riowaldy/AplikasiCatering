@@ -16,7 +16,7 @@ var menu = function () {
                         deleteData();
                     }else if (dataResult.role == 2){
                         $('#btn-tambah').hide();
-                        $('td:nth-child(4),th:nth-child(4)').hide();
+                        $('td:nth-child(5),th:nth-child(5)').hide();
                         getDataMenuPelanggan();
                     }else{
                         
@@ -85,11 +85,29 @@ var menu = function () {
             },
             'columns': [
                 { 'data': 'id'},
+                {
+                    'render': function (data, type, full, meta) {
+                        var html = '';
+                        html += '<div class="text-center">';
+                        html += '<img src="../../public/img/menu/' + full.id + '/' + full.gambar + '" width=100 height=100>';
+                        html += '</div>';
+                        return html;
+                    }
+                },
                 { 'data': 'nama'},
                 { 
                     'data': 'harga', 
                     'render': $.fn.dataTable.render.number( '.', ',', 2, 'Rp' )
                 
+                },
+                {
+                    'render': function (data, type, full, meta) {
+                        var html = '';
+                        html += '<div class="text-center">';
+                        
+                        html += '</div>';
+                        return html;
+                    }
                 }
             ],
             "order": [],
