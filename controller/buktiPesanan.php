@@ -1,7 +1,7 @@
 <?php
 	require 'koneksi.php';
 	$id = $_POST['id'];
-	$sql = "select created_at from pesanan where id = $id";
+	$sql = "select user_id, DATE_FORMAT(tanggal,'%Y-%m-%d') tanggal, created_at from pesanan where id = $id";
     $result = $conn->query($sql);
 	$row = mysqli_fetch_array($result);
 
@@ -9,19 +9,16 @@
     date_default_timezone_set('Asia/Jakarta');
 	$updated_at = date("Y-m-d h:i:s A");
 	$created_at = $row['created_at'];
+	$tanggal = $row['tanggal'];
+	$user_id = $row['user_id'];
 	define ('SITE_ROOT', dirname(__DIR__, 1));
 
     if($cekgambar == 1){
-		$sql = "select DATE_FORMAT(tanggal,'%Y-%m-%d') tanggal from pesanan where id = $id";
+		$sql = "select id from pesanan where DATE_FORMAT(tanggal,'%Y-%m-%d') = '$tanggal' and user_id = '$user_id'";
 		$result2 = $conn->query($sql);
-		$row2 = mysqli_fetch_array($result2);
-		$tanggal = $row2['tanggal'];
-
-		$sql = "select id from pesanan where DATE_FORMAT(tanggal,'%Y-%m-%d') = '$tanggal'";
-		$result3 = $conn->query($sql);
 		$uploaded = false;
-		while($row3 = $result3 -> fetch_assoc()){
-			$idloop = $row3['id'];
+		while($row2 = $result2 -> fetch_assoc()){
+			$idloop = $row2['id'];
 			$valid_extensions = array('jpeg', 'jpg', 'png');
 			$path = SITE_ROOT.'/public/img/bukti/'.$idloop.'/';
 			$img = $_FILES["gambar"]["name"];
