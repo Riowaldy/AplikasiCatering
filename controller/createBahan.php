@@ -1,6 +1,6 @@
 <?php
     require 'koneksi.php';
-    $sql = "select (case when (max(id)) is null then 1 else (max(id)+1) end) as id from bahan";
+    $sql = "select (case when (max(id_bahan)) is null then 1 else (max(id_bahan)+1) end) as id from bahan";
     $result = $conn->query($sql);
     $row = mysqli_fetch_array($result);
 
@@ -12,12 +12,12 @@
     $updated_at = date("Y-m-d h:i:s A");
     $created_at = date("Y-m-d h:i:s A");
 
-    $sql = "select nama from bahan where nama = '$nama'";
+    $sql = "select nama_bahan from bahan where nama_bahan = '$nama'";
     $result = $conn->query($sql);
     $row2 = mysqli_fetch_array($result);
 
     if($row2 == null){
-        $sql = "INSERT INTO bahan (id, nama, stok, satuan, updated_at, created_at)
+        $sql = "INSERT INTO bahan (id_bahan, nama_bahan, stok_bahan, satuan, updated_bahan, created_bahan)
         VALUES ($id, '$nama', '$stok', '$satuan', '$updated_at', '$created_at')";
         if (mysqli_query($conn, $sql)) {
             echo json_encode(array("statusCode"=>200));

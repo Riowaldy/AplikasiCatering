@@ -1,6 +1,6 @@
 <?php
     require 'koneksi.php';
-    $sql = "select (case when (max(id)) is null then 1 else (max(id)+1) end) as id from pesanan";
+    $sql = "select (case when (max(id_pesanan)) is null then 1 else (max(id_pesanan)+1) end) as id from pesanan";
     $result = $conn->query($sql);
     $row = mysqli_fetch_array($result);
 
@@ -13,8 +13,8 @@
     $updated_at = date("Y-m-d h:i:s A");
     $created_at = date("Y-m-d h:i:s A");
 
-    $sql = "select menu_id, bahan_id, jumlah from stok
-            where menu_id = '$menu_id'";
+    $sql = "select id_menu, id_bahan, jumlah_stok from stok
+            where id_menu = '$menu_id'";
     $result2 = $conn->query($sql);
     while($row2 = mysqli_fetch_assoc($result2))
     {
@@ -24,16 +24,16 @@
     $hitung = 0;
     if(count($data) > 0){
         for ($x = 0; $x < count($data); $x++) {
-            $bahan_id = $data[$x]["bahan_id"];
-            $jumlahawal = $data[$x]["jumlah"];
+            $bahan_id = $data[$x]["id_bahan"];
+            $jumlahawal = $data[$x]["jumlah_stok"];
             $jumlahakhir = $jumlahawal * $jumlah;
 
-            $sql3 = "select stok from bahan
-            where id = '$bahan_id'";
+            $sql3 = "select stok_bahan from bahan
+            where id_bahan = '$bahan_id'";
             $result3 = $conn->query($sql3);
             $row3 = mysqli_fetch_assoc($result3);
 
-            $stokbahan = $row3["stok"];
+            $stokbahan = $row3["stok_bahan"];
 
             $stokupdate = $stokbahan - $jumlahakhir;
             
@@ -44,10 +44,10 @@
         if($hitung == count($data)){
             for ($x = 0; $x < count($arrstok); $x++) {
                 $sql = "UPDATE `bahan` 
-                SET `stok` = '$arrstok[$x]', `updated_at` = '$updated_at' WHERE id = $arrbahan[$x]";
+                SET `stok_bahan` = '$arrstok[$x]', `updated_bahan` = '$updated_at' WHERE id = $arrbahan[$x]";
                 mysqli_query($conn, $sql);
 
-                $sql = "INSERT INTO pesanan (id, menu_id, user_id, jumlah, tanggal, updated_at, created_at)
+                $sql = "INSERT INTO pesanan (id_pesanan, id_menu, id_users, jumlah_pesanan, tanggal_pesanan, updated_pesanan, created_pesanan)
                 VALUES ($id, '$menu_id', '$user_id', '$jumlah', '$tanggal', '$updated_at', '$created_at')";
                 mysqli_query($conn, $sql);
             }

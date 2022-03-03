@@ -1,7 +1,7 @@
 <?php
     require 'koneksi.php';
 
-    $sql = 'SELECT id, nama, stok, satuan FROM bahan';
+    $sql = 'SELECT id_bahan id, nama_bahan nama, stok_bahan stok, satuan FROM bahan';
     $result = $conn->query($sql);
     while($row = mysqli_fetch_array($result))
     {

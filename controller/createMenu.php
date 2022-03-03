@@ -1,6 +1,6 @@
 <?php
     require 'koneksi.php';
-    $sql = "select (case when (max(id)) is null then 1 else (max(id)+1) end) as id from menu";
+    $sql = "select (case when (max(id_menu)) is null then 1 else (max(id_menu)+1) end) as id from menu";
     $result = $conn->query($sql);
     $row = mysqli_fetch_array($result);
 
@@ -24,14 +24,14 @@
     $updated_at = date("Y-m-d h:i:s A");
     $created_at = date("Y-m-d h:i:s A");
 
-    $sql = "select nama from menu where nama = '$nama'";
+    $sql = "select nama_menu from menu where nama_menu = '$nama'";
     $result = $conn->query($sql);
     $row2 = mysqli_fetch_array($result);
     if($row2 == null){
         if(in_array($ext, $valid_extensions)) {
             $path = $path.strtolower($final_image);
             if(move_uploaded_file($tmp,$path)) {
-                $sql = "INSERT INTO menu (id, nama, harga, gambar, updated_at, created_at)
+                $sql = "INSERT INTO menu (id_menu, nama_menu, harga_menu, gambar, updated_menu, created_menu)
                 VALUES ($id, '$nama', '$harga', '$final_image', '$updated_at', '$created_at')";
                 if (mysqli_query($conn, $sql)) {
                     echo json_encode(array("statusCode"=>200));

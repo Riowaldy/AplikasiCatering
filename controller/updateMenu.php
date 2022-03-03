@@ -1,7 +1,7 @@
 <?php
 	require 'koneksi.php';
 	$id = $_POST['id'];
-	$sql = "select created_at from menu where id = $id";
+	$sql = "select created_menu from menu where id_menu = $id";
     $result = $conn->query($sql);
 	$row = mysqli_fetch_array($result);
 	
@@ -11,7 +11,7 @@
 
 	date_default_timezone_set('Asia/Jakarta');
 	$updated_at = date("Y-m-d h:i:s A");
-	$created_at = $row['created_at'];
+	$created_at = $row['created_menu'];
 	if($cekgambar == 1){
 		$valid_extensions = array('jpeg', 'jpg', 'png');
 		define ('SITE_ROOT', dirname(__DIR__, 1));
@@ -36,7 +36,7 @@
 			$path = $path.strtolower($final_image);
 			if(move_uploaded_file($tmp,$path)) {
 				$sql = "UPDATE `menu` 
-				SET `nama` = '$nama', `harga` = '$harga', `gambar` = '$final_image', `updated_at` = '$updated_at', `created_at` = '$created_at' WHERE id = $id";
+				SET `nama_menu` = '$nama', `harga_menu` = '$harga', `gambar` = '$final_image', `updated_menu` = '$updated_at', `created_menu` = '$created_at' WHERE id_menu = $id";
 				if (mysqli_query($conn, $sql)) {
 					echo json_encode(array("statusCode"=>200));
 				} 
@@ -53,7 +53,7 @@
 		}
 	}else{
 		$sql = "UPDATE `menu` 
-		SET `nama` = '$nama', `harga` = '$harga', `updated_at` = '$updated_at', `created_at` = '$created_at' WHERE id = $id";
+		SET `nama_menu` = '$nama', `harga_menu` = '$harga', `updated_menu` = '$updated_at', `created_menu` = '$created_at' WHERE id_menu = $id";
 		if (mysqli_query($conn, $sql)) {
 			echo json_encode(array("statusCode"=>200));
 		} 

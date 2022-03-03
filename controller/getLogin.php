@@ -30,9 +30,9 @@
         // mysqli_close($conn);
 
         try {
-            $sql = "select a.id userid, a.username, a.password, c.id role from users a 
-            join user_role b on a.id = b.user_id 
-            join role c on b.role_id = c.id 
+            $sql = "select a.id_users userid, a.username, a.password, c.id_role role from users a 
+            join user_role b on a.id_users = b.id_users 
+            join role c on b.id_role = c.id_role 
             where a.username = :username and a.password = :password";
             $stmt = $pdo->prepare($sql); 
             $stmt->bindParam(':username', $username);
@@ -40,9 +40,9 @@
             $stmt->execute();
             $count = $stmt->rowCount();
             if($count == 1) {
-                $check=mysqli_query($conn,"select a.id userid, a.username, a.password, c.id role from users a 
-                join user_role b on a.id = b.user_id 
-                join role c on b.role_id = c.id 
+                $check=mysqli_query($conn,"select a.id_users userid, a.username, a.password, c.id_role role from users a 
+                join user_role b on a.id_users = b.id_users 
+                join role c on b.id_role = c.id_role 
                 where a.username = '$username' and a.password = '$password'");
                 $row = mysqli_fetch_array($check);
                 $role = $row['role'];

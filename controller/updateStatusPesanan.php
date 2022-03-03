@@ -1,7 +1,7 @@
 <?php
 	require 'koneksi.php';
 	$id = $_POST['id'];
-	$sql = "select created_at from pesanan where id = $id";
+	$sql = "select created_pesanan from pesanan where id_pesanan = $id";
     $result = $conn->query($sql);
 	$row = mysqli_fetch_array($result);
 	
@@ -14,9 +14,9 @@
     }
 	date_default_timezone_set('Asia/Jakarta');
 	$updated_at = date("Y-m-d h:i:s A");
-	$created_at = $row['created_at'];
+	$created_at = $row['created_pesanan'];
     $sql = "UPDATE `pesanan` 
-	SET `status` = '$statusupd', `updated_at` = '$updated_at', `created_at` = '$created_at' WHERE id = $id";
+	SET `status_pesanan` = '$statusupd', `updated_pesanan` = '$updated_at', `created_pesanan` = '$created_at' WHERE id_pesanan = $id";
     if (mysqli_query($conn, $sql)) {
 		echo json_encode(array("statusCode"=>200));
 	} 
