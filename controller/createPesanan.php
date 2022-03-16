@@ -43,10 +43,10 @@
         }
         if($hitung == count($data)){
             for ($x = 0; $x < count($arrstok); $x++) {
-                $sql = "UPDATE `bahan` 
-                SET `stok_bahan` = '$arrstok[$x]', `updated_bahan` = '$updated_at' WHERE id = $arrbahan[$x]";
-                mysqli_query($conn, $sql);
-
+                // $sql = "UPDATE `bahan` 
+                // SET `stok_bahan` = '$arrstok[$x]', `updated_bahan` = '$updated_at' WHERE id_bahan = $arrbahan[$x]";
+                // mysqli_query($conn, $sql);
+                
                 $sql = "INSERT INTO pesanan (id_pesanan, id_menu, id_users, jumlah_pesanan, tanggal_pesanan, updated_pesanan, created_pesanan)
                 VALUES ($id, '$menu_id', '$user_id', '$jumlah', '$tanggal', '$updated_at', '$created_at')";
                 mysqli_query($conn, $sql);
