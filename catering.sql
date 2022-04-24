@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Jun 2021 pada 12.53
+-- Waktu pembuatan: 24 Apr 2022 pada 19.15
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.10
 
@@ -28,27 +28,27 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bahan` (
-  `id` int(11) NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `stok` double(11,1) NOT NULL,
+  `id_bahan` int(11) NOT NULL,
+  `nama_bahan` varchar(255) NOT NULL,
+  `stok_bahan` double(11,1) NOT NULL,
   `satuan` varchar(20) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_bahan` timestamp NULL DEFAULT NULL,
+  `updated_bahan` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `bahan`
 --
 
-INSERT INTO `bahan` (`id`, `nama`, `stok`, `satuan`, `created_at`, `updated_at`) VALUES
-(1, 'Beras', 3250.0, 'gram', '2021-06-21 05:34:14', '2021-06-21 22:49:01'),
-(2, 'Gula', 5000.0, 'gram', '2021-06-21 05:34:25', '2021-06-21 22:38:26'),
-(3, 'Minyak', 8.8, 'liter', '2021-06-21 05:34:40', '2021-06-21 22:48:36'),
-(4, 'Garam', 1878.5, 'gram', '2021-06-21 05:35:29', '2021-06-21 22:49:01'),
-(5, 'Mie', 50.0, 'pcs', '2021-06-21 05:36:15', '2021-06-21 05:36:15'),
-(6, 'Ayam', 9710.0, 'gram', '2021-06-21 05:36:24', '2021-06-21 22:49:01'),
-(7, 'Micin', 500.0, 'gram', '2021-06-21 05:48:32', '2021-06-20 20:07:18'),
-(8, 'Kecap', 8.6, 'liter', '2021-06-21 20:49:21', '2021-06-21 22:48:49');
+INSERT INTO `bahan` (`id_bahan`, `nama_bahan`, `stok_bahan`, `satuan`, `created_bahan`, `updated_bahan`) VALUES
+(1, 'Beras', -235000.0, 'gram', '2021-06-21 05:34:14', '2022-03-16 00:34:02'),
+(2, 'Gula', 50000.0, 'gram', '2021-06-21 05:34:25', '2022-01-26 02:57:30'),
+(3, 'Minyak', 9866.0, 'liter', '2021-06-21 05:34:40', '2022-03-16 00:34:02'),
+(4, 'Garam', 6495.0, 'gram', '2021-06-21 05:35:29', '2022-03-16 00:34:02'),
+(5, 'Mie', 50000.0, 'pcs', '2021-06-21 05:36:15', '2022-01-26 02:58:06'),
+(6, 'Ayam', -1200.0, 'gram', '2021-06-21 05:36:24', '2022-03-16 00:33:39'),
+(7, 'Micin', 5000.0, 'gram', '2021-06-21 05:48:32', '2022-01-26 02:57:48'),
+(8, 'Kecap', 4900.0, 'liter', '2021-06-21 20:49:21', '2022-03-16 00:33:39');
 
 -- --------------------------------------------------------
 
@@ -57,21 +57,22 @@ INSERT INTO `bahan` (`id`, `nama`, `stok`, `satuan`, `created_at`, `updated_at`)
 --
 
 CREATE TABLE `menu` (
-  `id` int(11) NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `harga` int(100) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `id_menu` int(11) NOT NULL,
+  `nama_menu` varchar(255) NOT NULL,
+  `harga_menu` int(100) NOT NULL,
+  `created_menu` timestamp NULL DEFAULT NULL,
+  `updated_menu` timestamp NULL DEFAULT NULL,
+  `gambar` varchar(225) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `menu`
 --
 
-INSERT INTO `menu` (`id`, `nama`, `harga`, `created_at`, `updated_at`) VALUES
-(1, 'Nasi Goreng', 12000, '2021-06-14 07:50:55', '2021-06-14 07:50:55'),
-(3, 'Sate Ayam', 15000, '2021-06-14 03:23:05', '2021-06-20 21:26:29'),
-(4, 'Soto Ayam', 12000, '2021-06-20 21:28:06', '2021-06-20 21:28:22');
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `harga_menu`, `created_menu`, `updated_menu`, `gambar`) VALUES
+(1, 'Nasi Goreng', 13000, '2021-06-14 07:50:55', '2022-03-03 00:10:33', '5443233.jpeg'),
+(3, 'Sate Ayam', 15000, '2021-06-14 03:23:05', '2022-02-15 19:43:35', '9736574.jpg'),
+(4, 'Soto Ayam', 13000, '2021-06-20 21:28:06', '2022-02-15 19:43:28', '2855095.jpeg');
 
 -- --------------------------------------------------------
 
@@ -80,24 +81,26 @@ INSERT INTO `menu` (`id`, `nama`, `harga`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `pesanan` (
-  `id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `tanggal` timestamp NULL DEFAULT NULL,
-  `status` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `id_pesanan` int(11) NOT NULL,
+  `id_menu` int(11) NOT NULL,
+  `id_users` int(11) NOT NULL,
+  `jumlah_pesanan` int(11) NOT NULL,
+  `tanggal_pesanan` timestamp NULL DEFAULT NULL,
+  `status_pesanan` int(11) NOT NULL,
+  `created_pesanan` timestamp NULL DEFAULT NULL,
+  `updated_pesanan` timestamp NULL DEFAULT NULL,
+  `bukti` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `pesanan`
 --
 
-INSERT INTO `pesanan` (`id`, `menu_id`, `user_id`, `jumlah`, `tanggal`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 12, '2021-06-26 10:43:00', 0, '2021-06-21 22:40:59', '2021-06-21 22:48:36'),
-(2, 3, 2, 14, '2021-07-02 10:48:00', 0, '2021-06-21 22:48:49', '2021-06-21 22:48:49'),
-(3, 4, 3, 15, '2021-06-15 10:48:00', 0, '2021-06-21 22:49:01', '2021-06-21 22:49:01');
+INSERT INTO `pesanan` (`id_pesanan`, `id_menu`, `id_users`, `jumlah_pesanan`, `tanggal_pesanan`, `status_pesanan`, `created_pesanan`, `updated_pesanan`, `bukti`) VALUES
+(1, 3, 4, 40, '2022-03-18 13:22:00', 1, '2021-06-14 07:50:55', '2022-03-03 00:25:58', '613524bukti.jpg'),
+(2, 1, 2, 100, '2022-03-17 12:33:00', 1, '2022-03-03 00:33:16', '2022-03-16 00:33:10', NULL),
+(3, 3, 4, 1000, '2022-03-30 12:33:00', 1, '2022-03-16 00:33:31', '2022-03-16 00:33:39', NULL),
+(4, 1, 4, 1000, '2022-04-08 12:33:00', 1, '2022-03-16 00:34:00', '2022-03-16 00:34:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -106,17 +109,17 @@ INSERT INTO `pesanan` (`id`, `menu_id`, `user_id`, `jumlah`, `tanggal`, `status`
 --
 
 CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `id_role` int(11) NOT NULL,
+  `nama_role` varchar(100) NOT NULL,
+  `created_role` timestamp NULL DEFAULT NULL,
+  `updated_role` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `role`
 --
 
-INSERT INTO `role` (`id`, `nama`, `created_at`, `updated_at`) VALUES
+INSERT INTO `role` (`id_role`, `nama_role`, `created_role`, `updated_role`) VALUES
 (1, 'admin', '2021-06-14 14:25:02', '2021-06-14 14:25:02'),
 (2, 'pelanggan', '2021-06-14 14:25:02', '2021-06-14 14:25:02');
 
@@ -127,19 +130,19 @@ INSERT INTO `role` (`id`, `nama`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `stok` (
-  `id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL,
-  `bahan_id` int(11) NOT NULL,
-  `jumlah` decimal(11,1) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `id_stok` int(11) NOT NULL,
+  `id_menu` int(11) NOT NULL,
+  `id_bahan` int(11) NOT NULL,
+  `jumlah_stok` decimal(11,1) NOT NULL,
+  `created_stok` timestamp NULL DEFAULT NULL,
+  `updated_stok` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `stok`
 --
 
-INSERT INTO `stok` (`id`, `menu_id`, `bahan_id`, `jumlah`, `created_at`, `updated_at`) VALUES
+INSERT INTO `stok` (`id_stok`, `id_menu`, `id_bahan`, `jumlah_stok`, `created_stok`, `updated_stok`) VALUES
 (1, 1, 3, '0.1', '2021-06-20 20:10:49', '2021-06-20 20:10:49'),
 (2, 1, 1, '250.0', '2021-06-20 20:11:23', '2021-06-20 20:11:23'),
 (3, 1, 4, '10.0', '2021-06-20 20:11:51', '2021-06-20 20:11:51'),
@@ -151,7 +154,7 @@ INSERT INTO `stok` (`id`, `menu_id`, `bahan_id`, `jumlah`, `created_at`, `update
 (10, 3, 8, '0.1', '2021-06-21 20:49:35', '2021-06-21 20:49:35'),
 (11, 4, 1, '250.0', '2021-06-21 20:49:48', '2021-06-21 20:49:48'),
 (12, 4, 6, '10.0', '2021-06-21 20:50:01', '2021-06-21 20:50:01'),
-(13, 4, 4, '0.1', '2021-06-21 20:50:14', '2021-06-21 20:50:14');
+(13, 4, 4, '10.0', '2021-06-21 20:50:14', '2022-03-03 00:28:12');
 
 -- --------------------------------------------------------
 
@@ -160,21 +163,25 @@ INSERT INTO `stok` (`id`, `menu_id`, `bahan_id`, `jumlah`, `created_at`, `update
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id_users` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `nohp` varchar(20) NOT NULL,
+  `created_users` timestamp NULL DEFAULT NULL,
+  `updated_users` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '12345', '2021-06-08 06:36:50', '2021-06-08 06:36:50'),
-(2, 'Pelanggan 1', '12345', '2021-06-14 14:26:11', '2021-06-14 14:26:11'),
-(3, 'Pelanggan 2', '12345', '2021-06-14 14:26:35', '2021-06-14 14:26:35');
+INSERT INTO `users` (`id_users`, `username`, `password`, `nohp`, `created_users`, `updated_users`) VALUES
+(1, 'admin', '123456', '0', '2021-06-08 06:36:50', '2021-06-08 06:36:50'),
+(2, 'Pelanggan 1', '123456', '085156542326', '2021-06-14 14:26:11', '2021-06-14 14:26:11'),
+(3, 'Pelanggan 2', '123456', '085156542326', '2021-06-14 14:26:35', '2021-06-14 14:26:35'),
+(4, 'Rio', 'abcdef', '08999999999999', '2021-08-25 03:59:47', '2021-08-25 03:59:47'),
+(5, 'Pelanggan 3', '123456', '0832523532532', '2022-03-03 00:06:53', '2022-03-03 00:06:53'),
+(6, 'Pelanggan 4', '123456', '0814124124', '2022-03-03 00:19:31', '2022-03-03 00:19:31');
 
 -- --------------------------------------------------------
 
@@ -183,19 +190,22 @@ INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `updated_at`) V
 --
 
 CREATE TABLE `user_role` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL
+  `id_user_role` int(11) NOT NULL,
+  `id_users` int(11) NOT NULL,
+  `id_role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `user_role`
 --
 
-INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES
+INSERT INTO `user_role` (`id_user_role`, `id_users`, `id_role`) VALUES
 (1, 1, 1),
 (2, 2, 2),
-(3, 3, 2);
+(3, 3, 2),
+(4, 4, 2),
+(5, 5, 2),
+(6, 6, 2);
 
 --
 -- Indexes for dumped tables
@@ -205,43 +215,43 @@ INSERT INTO `user_role` (`id`, `user_id`, `role_id`) VALUES
 -- Indeks untuk tabel `bahan`
 --
 ALTER TABLE `bahan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_bahan`);
 
 --
 -- Indeks untuk tabel `menu`
 --
 ALTER TABLE `menu`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_menu`);
 
 --
 -- Indeks untuk tabel `pesanan`
 --
 ALTER TABLE `pesanan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_pesanan`);
 
 --
 -- Indeks untuk tabel `role`
 --
 ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_role`);
 
 --
 -- Indeks untuk tabel `stok`
 --
 ALTER TABLE `stok`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_stok`);
 
 --
 -- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_users`);
 
 --
 -- Indeks untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_user_role`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -251,43 +261,43 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT untuk tabel `bahan`
 --
 ALTER TABLE `bahan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_bahan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `stok`
 --
 ALTER TABLE `stok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_stok` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_users` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_user_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
